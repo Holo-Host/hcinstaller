@@ -1,8 +1,13 @@
 .container {
-  position: absolute;
-  top: 30%;
-  left: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
   text-align: center;
+}
+
+.container > * {
+  flex: 1 100%;
 }
 
 .container h2 {
