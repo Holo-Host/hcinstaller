@@ -20,7 +20,15 @@ export default {
             cacheDirectory: true
           }
         }
-      }
+      },
+      {
+          // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+          test: /\.(ts)$/,
+          exclude: /node_modules/,
+          use: {
+              loader: 'ts-loader',
+          },
+      },
     ]
   },
 

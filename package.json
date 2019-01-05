@@ -2,7 +2,7 @@
   "name": "HCInstaller",
   "productName": "Holo.Host:HCInstaller",
   "version": "0.0.1",
-  "description": "GUI for Holochain Installer.",
+  "description": "A software tool to help configure the Holochain environment on your local device.",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
@@ -117,7 +117,7 @@
     "electron",
     "Holochain",
     "Holo",
-    "hcadmin"
+    "HCInstaller"
   ],
   "homepage": "https://github.com//Holo-Host/HCInstaller#readme",
   "jest": {
@@ -127,6 +127,8 @@
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
+      "ts",
+      "tsx",
       "js",
       "jsx",
       "json"
@@ -246,8 +248,10 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "source-map-support": "^0.5.9"
+    "source-map-support": "^0.5.9",
+    "ts-loader": "^5.3.2"
   },
   "devEngines": {
     "node": ">=7.x",

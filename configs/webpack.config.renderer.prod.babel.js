@@ -20,7 +20,7 @@ export default merge.smart(baseConfig, {
 
   target: 'electron-renderer',
 
-  entry: path.join(__dirname, '..', 'app/index'),
+  entry: path.join(__dirname, '..', 'app/index'), // app/index.tsx
 
   output: {
     path: path.join(__dirname, '..', 'app/dist'),
@@ -30,6 +30,14 @@ export default merge.smart(baseConfig, {
 
   module: {
     rules: [
+      // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+      {
+          test: /\.(ts)$/,
+          exclude: /node_modules/,
+          use: {
+              loader: 'ts-loader',
+          },
+      },
       // Extract all .global.css to style.css as is
       {
         test: /\.global\.css$/,

@@ -1,13 +1,13 @@
-import React from 'react';
-import { render } from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import Root from './Root';
+import Root from './Root'; //root.tsx
 import { configureStore, history } from './store/configureStore';
 import './app.global.css';
 
 const store = configureStore();
 
-render(
+ReactDOM.render(
   <AppContainer>
     <Root store={store} history={history} />
   </AppContainer>,
