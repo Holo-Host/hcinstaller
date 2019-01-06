@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
 import { ActionTypes, Action, IHelloWorldService } from './types'
+import * as services from './services';
 
 // interface between window and main electron app >> uses IPC
 export default function(service: IHelloWorldService) {
@@ -11,12 +12,11 @@ export default function(service: IHelloWorldService) {
           message: 'waiting for response'
         }
       })
-      const message = await service.sayHelloToMainProcess()
 
-      dispatch({
+      return dispatch({
         type: ActionTypes.RECEIVED_HELLO,
         payload: {
-          message
+          message: await services()
         }
       })
     }

@@ -49,7 +49,7 @@ export default merge.smart(baseConfig, {
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${port}/`,
     'webpack/hot/only-dev-server',
-    require.resolve('../app/index.tsx') //  app/index
+    require.resolve('../app/index') //  app/index.tsx
   ],
 
   output: {
@@ -70,12 +70,12 @@ export default merge.smart(baseConfig, {
         }
       },
       {
-          // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
-          test: /\.(ts)$/,
-          exclude: /node_modules/,
-          use: {
-              loader: 'ts-loader',
-          },
+        // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+            loader: 'ts-loader',
+        },
       },
       {
         test: /\.global\.css$/,

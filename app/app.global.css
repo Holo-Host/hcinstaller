@@ -12,6 +12,8 @@ body {
   background-image: linear-gradient(45deg, rgba(0, 216, 255, 0.5) 10%, rgba(0, 1, 127, 0.7));
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   overflow-y: hidden;
+  -ms-overflow-style: scrollbar;
+  -webkit-app-region:drag;
 }
 
 h2 {
@@ -40,4 +42,17 @@ a:hover {
   opacity: 1;
   text-decoration: none;
   cursor: pointer;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="text"],
+button,
+textarea {
+	-webkit-app-region: no-drag;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  -webkit-user-select: none;
 }

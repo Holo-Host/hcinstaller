@@ -70,8 +70,12 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: 1050,
+    height: 800,
+    resizable: false,
+    // titleBarStyle: 'hidden'
+    // titleBarStyle: 'customButtonsOnHover',
+    frame: false
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

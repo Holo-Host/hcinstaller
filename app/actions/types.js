@@ -3,20 +3,20 @@ import type { Dispatch as ReduxDispatch, Store as ReduxStore } from 'redux';
 export type Dispatch = ReduxDispatch<Action>;
 export type Store = ReduxStore<GetState, Action>;
 
-export enum ActionTypes {
-  SAY_HELLO = 'SAY_HELLO',
-  RECEIVED_HELLO = 'RECEIVED_HELLO'
+export const ActionTypes = {
+  SAY_HELLO : 'SAY_HELLO',
+  RECEIVED_HELLO : 'RECEIVED_HELLO'
 }
 
 export type Action = {
-  readonly type: ActionTypes
-  readonly payload: {
-    readonly message: string
+  type: ActionTypes,
+  payload: {
+    message: string
   }
 }
 export type GlobalState = {
-  +counter: number
-  readonly message: string
+  message: string,
+  counter: number
 }
 
 export type GetState = () => State;

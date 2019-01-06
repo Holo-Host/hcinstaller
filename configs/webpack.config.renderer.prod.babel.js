@@ -1,7 +1,6 @@
 /**
  * Build config for electron renderer process
  */
-
 import path from 'path';
 import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -32,7 +31,7 @@ export default merge.smart(baseConfig, {
     rules: [
       // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
       {
-          test: /\.(ts)$/,
+          test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
           use: {
               loader: 'ts-loader',
