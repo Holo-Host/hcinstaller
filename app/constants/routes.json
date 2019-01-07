@@ -1,7 +1,9 @@
 {
-  "HELLOWORLD": "/helloworld",
-  "INSTALLATION":"/installation",
-  "SEEDDERIVATION": "/seedgeneration",
+  "WELCOMENEWUSER": "/",
   "COREAPPS": "/coreappselection",
-  "WELCOME": "/"
+  "SEEDDERIVATION": "/seedgeneration",
+  "INSTALLATION":"/installation",
+  "HELLOWORLD": "/helloworld",
+  "WELCOME": "/WEL"
 }
+  

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../constants/routes';
 import styles from './Welcome.css';
-import logo from '../assets/holo-logo.svg'
+import logo from '../assets/icons/HC-logo.svg'
 import {
   discoverNodeVersion,
   nodeBuild,
