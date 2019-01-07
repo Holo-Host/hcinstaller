@@ -241,7 +241,7 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
 
           <Grid item xs={12}>
              <div className={classes.modal}>
-                <Button variant="outlined" className={classnames('modal-button','learn-more',classes.modalButton)} onClick={this.handleClickHCinfoOpen}>
+                <Button variant="outlined" className={classnames('learn-more',classes.modalButton)} onClick={this.handleClickHCinfoOpen}>
                  Learn more about Holochain
                 </Button>
                 <Dialog

@@ -7,7 +7,7 @@ import InstallationPage from './containers/InstallationPage';
 import SeedGenerationPage from './containers/SeedGenerationPage';
 import CoreAppSeletionPage from './containers/CoreAppSeletionPage';
 import WelcomePage from './containers/WelcomePage';
-import WelcomeNewUserPage from './containers/WelcomePage';
+import WelcomeNewUserPage from './containers/WelcomeNewUserPage';
 
 export default () => (
   <App>

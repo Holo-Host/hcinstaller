@@ -13,8 +13,6 @@ class WelcomeNewUserPage extends Component<Props> {
     super(props);
   };
 
-  console.log("You're on the WelcomeNewUserPage!!");
-
   render() {
     return <WelcomeNewUser />;
   }

@@ -1,10 +1,19 @@
 // For the Rust container interface
 // import Container from '@holochain/holochain-nodejs';
-
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
+// MUI Imports:
+import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import { withStyles } from '@material-ui/core/styles';
+// local imports:
 import routes from '../constants/routes';
-import styles from './Welcome.css';
+import customStyle from './Welcome.css';
 import logo from '../assets/icons/HC-logo.svg'
 import {
   discoverNodeVersion,
@@ -19,6 +28,78 @@ import {
   HCrustBuild
 } from "../utils/hc-container-install";
 
+///////////////////////////////////
+// MUI Custom Styling :
+const styles = theme => ({
+  root: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    minWidth: 300,
+  },
+  paper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    height: 140,
+    width: 100,
+  },
+  header1: {
+    marginTop: 45,
+    marginLeft: 88,
+  },
+  header2: {
+    margin: 45,
+    fontFamily: 'Raleway',
+    fontWeight: 500,
+    letterSpacing: 3
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+  typography: {
+    fontFamily: 'Raleway',
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+  actions: {
+    display: 'flex',
+  },
+  button: {
+    margin: theme.spacing.unit,
+    color: '#eee',
+    backgroundColor: "#00A6AE"
+  },
+  fab: {
+    // margin: theme.spacing.unit,
+    margin: 54,
+    color: '#eee',
+    background: '#3d65d6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '&:hover, &$focusVisible': {
+      border: '3px solid #6600ff',
+      background: 'rgba(0, 1, 127, 0.7)'
+    },
+  },
+  nextIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  checkboxSection: {
+    display: 'flex',
+  },
+  inline: {
+    display: 'inline-block'
+  },
+  focusVisible: {},
+  hcLogo: {
+    height: '15%',
+    position: 'fixed',
+    left: 2,
+    top: 2
+  }
+});
+/////////////////////
 
 type WelcomeProps = {
   rust: {
@@ -34,7 +115,7 @@ type WelcomeProps = {
   fetch_state: () => void
 };
 
-export default class Welcome extends React.Component<WelcomeProps, {}> {
+class Installation extends React.Component<WelcomeProps, {}> {
   constructor(props:WelcomeProps){
     super(props);
     this.state = {
@@ -51,17 +132,6 @@ export default class Welcome extends React.Component<WelcomeProps, {}> {
 
   componentDidMount = () => {
     this.findNodeVersion();
-    // this.setState({
-    //   node_version: "nodeV",
-    // });
-    //
-    // this.setState({
-    //   hc_rust_version: "nodeV",
-    // });
-    //
-    // this.setState({
-    //   zmq_version: "nodeV",
-    // });
   }
 
 // NODE
@@ -208,46 +278,195 @@ export default class Welcome extends React.Component<WelcomeProps, {}> {
     console.log("this.props : ",this.props);
     console.log("this.state : ",this.state);
 
+    const { classes, fullScreen } = this.props;
     const {node_version, rustup_version, cargo_version, hc_rust_version, zmq_version, container_installed} = this.state
     // const { rust } = this.props
     // if(!rust) {
-    if(!rustup_version || !cargo_version || !hc_rust_version || !zmq_version || !node_version) {
-      return (
-        <div className={styles.container} data-tid="container">
-          <img src={logo} className="App-Logo" alt="logo" />
-          <h2>Holochain Container Setup</h2>
-          <Link to={routes.HELLOWORLD}>
-            <button>Go to Hello World</button>
-          </Link>
-        </div>
-      );
-    }
+    // ////
+    // if(!rustup_version || !cargo_version || !hc_rust_version || !zmq_version || !node_version) {
+    //   return (
+    //     <Grid container className={classes.root} spacing={16}>
+    //       <div className={customStyle.container} data-tid="container">
+    //         <span className={classes.inline}>
+    //           <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
+    //         </span>
+    //         <h2 className={classes.header1}>Holochain Container Setup</h2>
+    //         <h3 className={classes.header2}>Let us welcome you into the community by introducing ourselves a bit more and offering you to some additional resources.</h3>
+    //
+    //         <Link to={routes.HELLOWORLD}>
+    //           <button>Go to Hello World</button>
+    //         </Link>
+    //
+    //       </div>
+    //     </Grid>
+    //   );
+    // }
 
     return (
-      <div className={styles.container} data-tid="container">
-        <img src={logo} className="App-Logo" alt="logo" />
-        <h2>Holochain Container Setup</h2>
+      <Grid container className={classes.root} spacing={16}>
+        <div className={customStyle.container} data-tid="container">
+          <span className={classes.inline}>
+            <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
+          </span>
+          <h2 className={classes.header1}>Holochain Container Setup</h2>
+          <h3 className={classes.header2}>Let us welcome you into the community by introducing ourselves a bit more and offering you to some additional resources.</h3>
 
-        <br/>
-        <h3>Your Node Version: {node_version}</h3>
-        <h3>Your Rustup Version: {rustup_version}</h3>
-        <h3>Your Cargo Version: {cargo_version}</h3>
-        <h3>Your libZMQ Version: {zmq_version}</h3>
-        <h3>Your HC Rust Version: {hc_rust_version}</h3>
+          <Grid item xs={12} className={classes.checkboxSection}>
+            <Grid container justify="center" spacing={16}>
 
-        <br/>
-        <Link to={routes.HELLOWORLD}>
-          <button>Go to Hello World</button>
-        </Link>
+            {node_version ?
+              <div className="checkbox">
+                <label>
+                  Node Installed : {node_version}
+                  <input type="checkbox" />
+                  <span className="checkbox-material">
+                    <span classNam="check"></span>
+                  </span>
+                </label>
+              </div>
+              :
+              <div className="checkbox">
+                <label>
+                  Node
+                  <input type="checkbox" />
+                  <span className="checkbox-material">
+                    <span classNam="check"></span>
+                  </span>
+                </label>
+              </div>
+            }
 
-        {container_installed ?
-          <Link to={routes.SEEDDERIVATION}>
-            <button>Go to Next Step</button>
-          </Link>
-          :
-          <div/>
-        }
-      </div>
+
+
+            {rustup_version ?
+              <div className="checkbox">
+                <label>
+                  Rustup Installed: {rustup_version}
+                  <input type="checkbox" />
+                  <span className="checkbox-material">
+                    <span classNam="check"></span>
+                  </span>
+                </label>
+              </div>
+              :
+              <div className="checkbox">
+                <label>
+                  Rustup
+                  <input type="checkbox" />
+                  <span className="checkbox-material">
+                    <span classNam="check"></span>
+                  </span>
+                </label>
+              </div>
+            }
+
+
+
+            {cargo_version ?
+                <div className="checkbox">
+                  <label>
+                    Cargo Installed : {cargo_version}
+                    <input type="checkbox" />
+                    <span className="checkbox-material">
+                      <span classNam="check"></span>
+                    </span>
+                  </label>
+                </div>
+                :
+                <div className="checkbox">
+                  <label>
+                    Cargo
+                    <input type="checkbox" />
+                    <span className="checkbox-material">
+                      <span classNam="check"></span>
+                    </span>
+                  </label>
+                </div>
+              }
+
+
+
+              {zmq_version ?
+                <div className="checkbox">
+                  ZeroMQ Installed : {zmq_version}
+                  <label>
+                    <input type="checkbox" />
+                    <span className="checkbox-material">
+                      <span classNam="check"></span>
+                    </span>
+                  </label>
+                </div>
+                :
+                <div className="checkbox">
+                  <label>
+                    ZeroMQ
+                    <input type="checkbox" />
+                    <span className="checkbox-material">
+                      <span classNam="check"></span>
+                    </span>
+                  </label>
+                </div>
+              }
+
+
+
+              {hc_rust_version ?
+                <div className="checkbox">
+                  <label>
+                    Holochain Rust Installed : {hc_rust_version}
+                    <input type="checkbox" />
+                    <span className="checkbox-material">
+                      <span classNam="check"></span>
+                    </span>
+                  </label>
+                </div>
+                :
+                <div className="checkbox">
+                  <label>
+                    Holochain Rust
+                    <input type="checkbox" />
+                    <span className="checkbox-material">
+                      <span classNam="check"></span>
+                    </span>
+                  </label>
+                </div>
+              }
+
+
+            </Grid>
+         </Grid>
+
+          <Fab variant="extended" aria-label="prev" className={classes.fab}>
+            <Link to={routes.WELCOMENEWUSER}>
+               <Icon className={classes.nextIcon} />
+               Review Holochain Info
+             </Link>
+          </Fab>
+          {container_installed ?
+            <Fab variant="extended" aria-label="next" className={classes.fab}>
+              <Link to={routes.SEEDDERIVATION}>
+                 <Icon className={classes.nextIcon} />
+                 Generate Device Seed
+               </Link>
+            </Fab>
+            :
+            <div/>
+          }
+        </div>
+      </Grid>
     );
   }
 }
+
+Installation.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Installation);
+
+
+// <h3>Your Node Version: {node_version}</h3>
+// <h3>Your Rustup Version: {rustup_version}</h3>
+// <h3>Your Cargo Version: {cargo_version}</h3>
+// <h3>Your libZMQ Version: {zmq_version}</h3>
+// <h3>Your HC Rust Version: {hc_rust_version}</h3>

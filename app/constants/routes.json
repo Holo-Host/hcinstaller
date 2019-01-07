@@ -1,9 +1,8 @@
 {
-  "WELCOMENEWUSER": "/",
+  "WELCOMENEWUSER": "/welcomenewuser",
   "COREAPPS": "/coreappselection",
   "SEEDDERIVATION": "/seedgeneration",
   "INSTALLATION":"/installation",
   "HELLOWORLD": "/helloworld",
-  "WELCOME": "/WEL"
+  "WELCOME": "/"
 }
-  

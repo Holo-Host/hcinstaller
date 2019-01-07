@@ -39,6 +39,26 @@ body {
   -webkit-app-region:drag;
 }
 
+.container {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.container > * {
+  flex: 1 100%;
+}
+
+.container h2 {
+  font-size: 5rem;
+}
+
+.container a {
+  font-size: 1.4rem;
+}
+
 h2 {
   font-family: Raleway, sans-serif;
   margin: 0;
