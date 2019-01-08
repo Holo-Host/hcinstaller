@@ -112,18 +112,18 @@ const styles = theme => ({
   }
 });
 
-type seedGenerationProps = {
+type devicePinProps = {
   pin_set: boolean,
   set_pin: () => void,
   fetch_state: () => void
 }
 
-type seedGenerationState = {
+type devicePinState = {
   numbers: any,
   pinSuccess: false
 }
 
-class SeedGeneration extends React.Component<seedGenerationProps, {}> {
+class DevicePin extends React.Component<devicePinProps, {}> {
   constructor(props:WelcomeProps){
     super(props);
     state = {
@@ -244,8 +244,8 @@ class SeedGeneration extends React.Component<seedGenerationProps, {}> {
   }
 }
 
-SeedGeneration.defaultProps = {
+DevicePin.defaultProps = {
   pin_set: false
 }
 
-export default withStyles(styles)(SeedGeneration);
+export default withStyles(styles)(DevicePin);

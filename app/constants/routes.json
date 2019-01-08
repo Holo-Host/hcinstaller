@@ -4,7 +4,7 @@
   "ROOTSEED": "/rootseed",
   "WELCOMENEWUSER": "/welcomenewuser",
   "COREAPPS": "/coreappselection",
-  "SEEDDERIVATION": "/seedgeneration",
+  "DEVICEPIN": "/devicepin",
   "INSTALLATION":"/installation",
   "HELLOWORLD": "/helloworld",
   "WELCOME": "/"
