@@ -1,3 +1,6 @@
+// description to be used in the info message:
+// The root (Hierarchical Deterministic) key facilities the creation and control of an identity that can then create subsequent child identities or personas depending on the context of the identity use case.
+/////////////////////////////////////////////////////////////////////////////
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -202,7 +205,7 @@ function ModalTransition(props) {
   return <Slide direction="down" {...props} />;
 }
 
-class WelcomeNewUser extends React.Component<WelcomeNewUserProps, WelcomeNewUserState>{
+class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSeedPassphraseState>{
   constructor(props:WelcomeProps){
     super(props);
     this.state = {
@@ -347,7 +350,7 @@ class WelcomeNewUser extends React.Component<WelcomeNewUserProps, WelcomeNewUser
                         <CardContent>
                           <Typography paragraph>Curious to know more?</Typography>
                           <Typography paragraph>
-                            We're glad to hear it!
+                            We're glad to hear it!'
                           </Typography>
                           <Typography paragraph>
                           Check out the following links to learn more about how Holochain help you protect your data, regain authorship of your interactions online, and even partipate in the developer community!
@@ -386,42 +389,20 @@ class WelcomeNewUser extends React.Component<WelcomeNewUserProps, WelcomeNewUser
               onClose={this.handleInstallationNoticeClose}
               aria-labelledby="responsive-dialog-title"
             >
-              <DialogTitle id="responsive-dialog-title">{"Ready to Install Holochain?"}</DialogTitle>
-              <DialogContent>
+              <DialogTitle id="responsive-dialog-title">{"Don't be scared, be prepared!"}</DialogTitle>
                 <DialogContentText>
-                  Hold on tight. You are about to enter into installation process for Holochain!
-                  <br/>
-                  <br/>
-                  Please keep in mind that Holochain is built with a few other software products and will require their installation prior to that of Holochain.
-                  <br/>
-                  <br/>
-                  Don't worry, though we have your back! If any of the required software required does not yet exist on your device, we will install it for you.
-                </DialogContentText>
-                <br/>
-                <DialogContentText>
-                  All we need from you is to read over the following list of softare products, and affirm that you agree and are ready to begin their installation.
-                    <br/>
-                    <br/>
-                    - Node (>8v : JavaScript Engine)
-                    <br/>
-                    - Rustup (>1.1 : Rust Toolchain Installer)
-                    <br/>
-                    - Cargo (>1.3 nightly build : Rust Package Manager)
-                    <br/>
-                    - ZeroMQ (>4v : Distributed Messaging Library )
-                    <br/>
-                    ... AND
-                    <br/>
-                    - Holochain Rust (latest version)
+                You are about to receive your Root Seed Bundle (and mnemonics?...).
+                  1.Prepares user to receive this sensative info.
+                  2.Describes/reiterates importance of Root Seed.
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleInstallationNoticeClose} color="primary">
                   Close
                 </Button>
-                <Link to={routes.INSTALLATION}>
+                <Link to={routes.ROOTSEED}>
                   <Button onClick={this.handleInstallationNoticeCloseAffirm} color="primary" autoFocus>
-                    Let's Begin Installing!
+                    Let's Begin Installing!'
                   </Button>
                 </Link>
               </DialogActions>
@@ -433,14 +414,8 @@ class WelcomeNewUser extends React.Component<WelcomeNewUserProps, WelcomeNewUser
   }
 }
 
-WelcomeNewUser.propTypes = {
+RootSeedPassphrase.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(WelcomeNewUser);
-
-// TODO: Figure out what is going on with the material ui ICONS >>> not importing at all (smthg wrong with modules?)
-// <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
-//    // <Icon className={classes.nextIcon}>Send</Icon>
-//    Start Intallation
-// </Fab>
+export default withStyles(styles)(RootSeedPassphrase);

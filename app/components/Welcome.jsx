@@ -2,6 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+// electron:
+import * as electron from "electron";
 // MUI Imports:
 import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -14,9 +16,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import Icon from '@material-ui/core/Icon';
+import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
+import Close from '@material-ui/icons/Close';
 // local imports:
 import routes from '../constants/routes';
+// import handleCloseWindow from '../utils/helper-functions'
 import logo from '../assets/icons/HC-logo.svg';
 import customStyle from './Welcome.css';
 
@@ -55,12 +61,18 @@ const styles = theme => ({
     height: 50,
     border: '4px solid #21acba',
     '&:hover, &$focusVisible': {
+      marginTop:16,
+      height: 54,
       zIndex: 1,
       border: '4px solid #6600ff',
-      color: "#21acba",
+      // color: "#21acba",
+      '& $buttonTitle': {
+        color: "#10d6a9",
+        fontWeight: '500',
+      },
       '& $buttonBackdrop': {
-        opacity: 0.1,
-        backgroundColor: "#2e1c68",
+        opacity: 0.8,
+        backgroundColor: "#2e03a2b3",
         transition: theme.transitions.create('opacity'),
       },
       '& $buttonSelected': {
@@ -69,6 +81,7 @@ const styles = theme => ({
     },
   },
   buttonTitle: {
+    color: "#fff",
     fontSize: '1.5rem',
     letterSpacing: 3,
     fontFamily: 'Raleway',
@@ -119,15 +132,21 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   modal: {
-    margin:10
+    display: 'inline',
   },
   modalButton: {
-    marginTop:45,
+    marginTop:40,
     color: '#21acba',
+    background: 'rgba(0, 1, 127, 0.7)',
+    opacity:0.8,
+    transition: theme.transitions.create('opacity'),
     border: '2px solid #10d6a9',
     '&:hover, &$focusVisible': {
       border: '3px solid #6600ff',
-      background: 'rgba(0, 1, 127, 0.7)'
+      background: '#2526cbb3',
+      color: '#eee',
+      height: 30,
+      marginTop:38,
     },
   },
   h3: {
@@ -144,6 +163,21 @@ const styles = theme => ({
   hcLogo: {
     height: '65%',
     marginTop: '-.1%'
+  },
+  closeIcon: {
+    margin: theme.spacing.unit,
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    fontSize: 10,
+    color: '#70a297',
+    border: '1px solid #70a297',
+    background: 'transparent',
+    '&:hover, &$focusVisible': {
+      border: '2px solid red',
+      color: 'red',
+      background: 'transparent',
+    },
   }
 });
 
@@ -154,6 +188,7 @@ type WelcomeProps = {
 
 type WelcomeState = {
   HCmodalOpen: boolean,
+  installationNotice: boolean,
 }
 
 function Transition(props) {
@@ -165,6 +200,7 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
     super(props);
     this.state = {
       HCmodalOpen: false,
+      installationNotice:false,
     };
   };
 
@@ -176,25 +212,29 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
     this.setState({ HCmodalOpen: false });
   };
 
-  render() {
-    const { classes } = this.props;
-    const buttonBackgrounds = [
-      {
-        color: 'transparent',
-        title: 'No',
-        link: routes.INSTALLATION,
-        width: '30%',
-      },
-      {
-        color: 'transparent',
-        title: 'Yes',
-        link: routes.WELCOMENEWUSER,
-        width: '30%',
-      },
-    ];
+  handleInstallationNoticeOpen = () => {
+    this.setState({ installationNotice: true });
+  };
 
+  handleInstallationNoticeClose = () => {
+    this.setState({ installationNotice: false });
+  };
+
+  handleCloseWindow = () => {
+    console.log("TRYING TO CLOSE APP...")
+    const { ipcRenderer, app } = electron;
+    console.log("ELECTRON OBJ param >>>APP", app);
+    const quit = 'quit'
+    ipcRenderer.send("window:close", quit);
+  };
+
+  render() {
+    const { classes, fullScreen } = this.props;
     return (
       <Grid id="holoMotion" container className={classes.root} spacing={16}>
+        <Fab aria-label="primary" className={classes.closeIcon} onClick={this.handleCloseWindow}>
+          <Icon>X</Icon>
+        </Fab>
         <div className={classnames('container', customStyle.container)} data-tid="container">
           <h2 className={classes.header}>Welcome to Holochain</h2>
           <img src={logo} className={classnames('app-logo', classes.hcLogo)} alt="logo" />
@@ -205,37 +245,113 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
             </Typography>
 
             <div className={classes.control}>
-              {buttonBackgrounds.map(background => (
-                <Link to={background.link} key={background.title}>
-                  <ButtonBase
+              <div className={classes.modal}>
+                <ButtonBase
                   focusRipple
+                  aria-label="next"
                   className={classes.buttonBackground}
                   focusVisibleClassName={classes.focusVisible}
                   style={{
-                    width: background.width,
+                    width: '30%',
                   }}
+                  onClick={this.handleInstallationNoticeOpen}
                   >
                     <span
                     className={classes.buttonSrc}
                     style={{
-                      backgroundImage: background.color,
+                      backgroundImage: 'transparent',
                     }}
                     />
-                      <span className={classes.buttonBackdrop} />
-                        <span className={classes.imageButton}>
-                          <Typography
-                          component="span"
-                          variant="subtitle1"
-                          color="inherit"
-                          className={classes.buttonTitle}
-                          >
-                          {background.title}
-                        <span className={classes.buttonSelected} />
-                      </Typography>
-                      </span>
-                    </ButtonBase>
-                </Link>
-              ))}
+                    <span className={classes.buttonBackdrop} />
+                    <span className={classes.imageButton}>
+                        <Typography
+                        component="span"
+                        variant="subtitle1"
+                        color="inherit"
+                        className={classes.buttonTitle}
+                        >
+                        No
+                      <span className={classes.buttonSelected} />
+                    </Typography>
+                   </span>
+                </ButtonBase>
+                <Dialog
+                  fullScreen={fullScreen}
+                  open={this.state.installationNotice}
+                  onClose={this.handleInstallationNoticeClose}
+                  aria-labelledby="responsive-dialog-title"
+                >
+                  <DialogTitle id="responsive-dialog-title">{"Ready to Install Holochain?"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Hold on tight. You are about to enter into installation process for Holochain!
+                      <br/>
+                      <br/>
+                      Please keep in mind that Holochain is built with a few other software products and will require their installation prior to that of Holochain.
+                      <br/>
+                      <br/>
+                      Don't worry, though we have your back! If any of the required software required does not yet exist on your device, we will install it for you.
+                    </DialogContentText>
+                    <br/>
+                    <DialogContentText>
+                      All we need from you is to read over the following list of softare products, and affirm that you agree and are ready to begin their installation.
+                        <br/>
+                        <br/>
+                        - Node (>8v : JavaScript Engine)
+                        <br/>
+                        - Rustup (>1.1 : Rust Toolchain Installer)
+                        <br/>
+                        - Cargo (>1.3 nightly build : Rust Package Manager)
+                        <br/>
+                        - ZeroMQ (>4v : Distributed Messaging Library )
+                        <br/>
+                        ... AND
+                        <br/>
+                        - Holochain Rust (latest version)
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleInstallationNoticeClose} color="primary">
+                      Close
+                    </Button>
+                    <Link to={routes.INSTALLATION}>
+                      <Button onClick={this.handleInstallationNoticeClose} color="primary" autoFocus>
+                        Let's Begin Installing!
+                      </Button>
+                    </Link>
+                  </DialogActions>
+                </Dialog>
+              </div>
+
+              <Link to={routes.WELCOMENEWUSER}>
+                <ButtonBase
+                focusRipple
+                className={classes.buttonBackground}
+                focusVisibleClassName={classes.focusVisible}
+                style={{
+                  width: '30%',
+                }}
+                >
+                  <span
+                    className={classes.buttonSrc}
+                    style={{
+                      backgroundImage: 'transparent',
+                    }}
+                  />
+                  <span className={classes.buttonBackdrop} />
+                  <span className={classes.imageButton}>
+                    <Typography
+                      component="span"
+                      variant="subtitle1"
+                      color="inherit"
+                      className={classes.buttonTitle}
+                    >
+                      Yes
+                      <span className={classes.buttonSelected} />
+                  </Typography>
+                 </span>
+                </ButtonBase>
+              </Link>
             </div>
           </Grid>
 
@@ -283,6 +399,5 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
 Welcome.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles)(Welcome);

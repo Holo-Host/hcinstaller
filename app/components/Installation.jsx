@@ -4,6 +4,9 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+// electron:
+import * as electron from "electron";
+const { app } = electron;
 // MUI Imports:
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -11,8 +14,11 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
+import Close from '@material-ui/icons/Close';
+import Send from '@material-ui/icons/Send';
 // local imports:
 import routes from '../constants/routes';
+// import handleCloseWindow from '../utils/helper-functions';
 import customStyle from './Welcome.css';
 import logo from '../assets/icons/HC-logo.svg'
 import {
@@ -82,7 +88,7 @@ const styles = theme => ({
       background: 'rgba(0, 1, 127, 0.7)'
     },
   },
-  nextIcon: {
+  closeIcon: {
     marginRight: theme.spacing.unit,
   },
   checkboxSection: {
@@ -97,6 +103,21 @@ const styles = theme => ({
     position: 'fixed',
     left: 2,
     top: 2
+  },
+  closeIcon: {
+    margin: theme.spacing.unit,
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    fontSize: 10,
+    color: '#70a297',
+    border: '1px solid #70a297',
+    background: 'transparent',
+    '&:hover, &$focusVisible': {
+      border: '2px solid red',
+      color: 'red',
+      background: 'transparent',
+    },
   }
 });
 /////////////////////
@@ -274,36 +295,48 @@ class Installation extends React.Component<WelcomeProps, {}> {
       // ping container and inspect communication / installation...
     // }
 
+    handleCloseWindow = () => {
+      const { ipcRenderer } = electron;
+      const quit = 'quit'
+      ipcRenderer.send("window:close", quit);
+    };
+
   render() {
     console.log("this.props : ",this.props);
     console.log("this.state : ",this.state);
 
     const { classes, fullScreen } = this.props;
+    // const {node_version, rustup_version, cargo_version, hc_rust_version, zmq_version, container_installed} = this.props
     const {node_version, rustup_version, cargo_version, hc_rust_version, zmq_version, container_installed} = this.state
-    // const { rust } = this.props
-    // if(!rust) {
-    // ////
-    // if(!rustup_version || !cargo_version || !hc_rust_version || !zmq_version || !node_version) {
-    //   return (
-    //     <Grid container className={classes.root} spacing={16}>
-    //       <div className={customStyle.container} data-tid="container">
-    //         <span className={classes.inline}>
-    //           <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
-    //         </span>
-    //         <h2 className={classes.header1}>Holochain Container Setup</h2>
-    //         <h3 className={classes.header2}>Let us welcome you into the community by introducing ourselves a bit more and offering you to some additional resources.</h3>
-    //
-    //         <Link to={routes.HELLOWORLD}>
-    //           <button>Go to Hello World</button>
-    //         </Link>
-    //
-    //       </div>
-    //     </Grid>
-    //   );
-    // }
+
+    const softwareToInstall = [
+      {
+        name: 'Node',
+        state_obj: node_version,
+      },
+      {
+        name: 'Rustup',
+        state_obj: rustup_version,
+      },
+      {
+        name: 'Cargo',
+        state_obj: cargo_version,
+      },
+      {
+        name: 'ZeroMQ',
+        state_obj: zmq_version,
+      },
+      {
+        name: 'Holochain Rust',
+        state_obj: hc_rust_version,
+      },
+    ];
 
     return (
       <Grid container className={classes.root} spacing={16}>
+        <Fab aria-label="primary" className={classes.closeIcon} onClick={this.handleCloseWindow}>
+          <Icon>X</Icon>
+        </Fab>
         <div className={customStyle.container} data-tid="container">
           <span className={classes.inline}>
             <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
@@ -313,145 +346,59 @@ class Installation extends React.Component<WelcomeProps, {}> {
 
           <Grid item xs={12} className={classes.checkboxSection}>
             <Grid container justify="center" spacing={16}>
-
-            {node_version ?
-              <div className="checkbox">
-                <label>
-                  Node Installed : {node_version}
-                  <input type="checkbox" />
-                  <span className="checkbox-material">
-                    <span classNam="check"></span>
-                  </span>
-                </label>
-              </div>
-              :
-              <div className="checkbox">
-                <label>
-                  Node
-                  <input type="checkbox" />
-                  <span className="checkbox-material">
-                    <span classNam="check"></span>
-                  </span>
-                </label>
-              </div>
-            }
-
-
-
-            {rustup_version ?
-              <div className="checkbox">
-                <label>
-                  Rustup Installed: {rustup_version}
-                  <input type="checkbox" />
-                  <span className="checkbox-material">
-                    <span classNam="check"></span>
-                  </span>
-                </label>
-              </div>
-              :
-              <div className="checkbox">
-                <label>
-                  Rustup
-                  <input type="checkbox" />
-                  <span className="checkbox-material">
-                    <span classNam="check"></span>
-                  </span>
-                </label>
-              </div>
-            }
-
-
-
-            {cargo_version ?
-                <div className="checkbox">
-                  <label>
-                    Cargo Installed : {cargo_version}
-                    <input type="checkbox" />
-                    <span className="checkbox-material">
-                      <span classNam="check"></span>
-                    </span>
-                  </label>
-                </div>
-                :
-                <div className="checkbox">
-                  <label>
-                    Cargo
-                    <input type="checkbox" />
-                    <span className="checkbox-material">
-                      <span classNam="check"></span>
-                    </span>
-                  </label>
-                </div>
-              }
-
-
-
-              {zmq_version ?
-                <div className="checkbox">
-                  ZeroMQ Installed : {zmq_version}
-                  <label>
-                    <input type="checkbox" />
-                    <span className="checkbox-material">
-                      <span classNam="check"></span>
-                    </span>
-                  </label>
-                </div>
-                :
-                <div className="checkbox">
-                  <label>
-                    ZeroMQ
-                    <input type="checkbox" />
-                    <span className="checkbox-material">
-                      <span classNam="check"></span>
-                    </span>
-                  </label>
-                </div>
-              }
-
-
-
-              {hc_rust_version ?
-                <div className="checkbox">
-                  <label>
-                    Holochain Rust Installed : {hc_rust_version}
-                    <input type="checkbox" />
-                    <span className="checkbox-material">
-                      <span classNam="check"></span>
-                    </span>
-                  </label>
-                </div>
-                :
-                <div className="checkbox">
-                  <label>
-                    Holochain Rust
-                    <input type="checkbox" />
-                    <span className="checkbox-material">
-                      <span classNam="check"></span>
-                    </span>
-                  </label>
-                </div>
-              }
-
-
+              <ul>
+              {softwareToInstall.map(software => (
+                <li>
+                {node_version ?
+                  <div className="checkbox">
+                    <label>
+                      <input type="checkbox-checked" />
+                      <span className="checkbox-material">
+                        <span classNam="check"></span>
+                      </span>
+                      {software.name} Installed : {software.state_obj}
+                    </label>
+                  </div>
+                  :
+                  <div className="checkbox">
+                    <label>
+                      <input type="checkbox" />
+                      <span className="checkbox-material">
+                        <span classNam="check"></span>
+                      </span>
+                      {software.name}
+                    </label>
+                  </div>
+                }
+                </li>
+              ))}
+              </ul>
             </Grid>
          </Grid>
 
-          <Fab variant="extended" aria-label="prev" className={classes.fab}>
-            <Link to={routes.WELCOMENEWUSER}>
-               <Icon className={classes.nextIcon} />
-               Review Holochain Info
-             </Link>
-          </Fab>
-          {container_installed ?
-            <Fab variant="extended" aria-label="next" className={classes.fab}>
-              <Link to={routes.SEEDDERIVATION}>
-                 <Icon className={classes.nextIcon} />
-                 Generate Device Seed
-               </Link>
-            </Fab>
-            :
-            <div/>
-          }
+         <Grid item xs={12} className={classes.checkboxSection}>
+           <Grid container justify="center" spacing={16}>
+              <Fab variant="extended" aria-label="prev" className={classes.fab}>
+                <Link to={routes.WELCOMENEWUSER}>
+                   <Icon className={classes.nextIcon} />
+                   Review Holochain Info
+                 </Link>
+              </Fab>
+              <Fab color={container_installed ? "primary" : disabled} variant="extended" aria-label="next" className={classes.fab}>
+                {container_installed ?
+                  <div>
+                    <Icon className={classes.nextIcon} />
+                    Generate Device Seed
+                  </div>
+                  :
+                  <Link to={routes.SEEDDERIVATION}>
+                   <Icon className={classes.nextIcon} />
+                   Generate Device Seed
+                 </Link>
+                }
+              </Fab>
+           </Grid>
+         </Grid>
         </div>
       </Grid>
     );

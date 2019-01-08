@@ -2,17 +2,23 @@ import * as React from 'react';
 import { Switch, Route } from 'react-router';
 import routes from './constants/routes';
 import App from './containers/App';
-// import HelloWorldPage from './containers/HelloWorldPage';
+import WelcomePage from './containers/WelcomePage';
+import WelcomeNewUserPage from './containers/WelcomeNewUserPage';
 import InstallationPage from './containers/InstallationPage';
 import SeedGenerationPage from './containers/SeedGenerationPage';
 import CoreAppSeletionPage from './containers/CoreAppSeletionPage';
-import WelcomePage from './containers/WelcomePage';
-import WelcomeNewUserPage from './containers/WelcomeNewUserPage';
+import RootSeedPage from './containers/RootSeedPage';
+import RootSeedPassphrasePage from './containers/RootSeedPassphrasePage';
+import DeviceBundlePage from './containers/DeviceBundlePage';
+// import HelloWorldPage from './containers/HelloWorldPage';
 
 export default () => (
   <App>
     <Switch>
-    <Route path={routes.WELCOMENEWUSER} component={WelcomeNewUserPage} />
+      <Route path={routes.DEVICEBUNDLES} component={DeviceBundlePage} />
+      <Route path={routes.ROOTSEEDPASSPHRASE} component={RootSeedPassphrasePage} />
+      <Route path={routes.ROOTSEED} component={RootSeedPage} />
+      <Route path={routes.WELCOMENEWUSER} component={WelcomeNewUserPage} />
       <Route path={routes.COREAPPS} component={CoreAppSeletionPage} />
       <Route path={routes.SEEDDERIVATION} component={SeedGenerationPage} />
       <Route path={routes.INSTALLATION} component={InstallationPage} />
@@ -20,5 +26,9 @@ export default () => (
     </Switch>
   </App>
 );
+
+// "DEVICEBUNDLES": "/devicebundles",
+// "ROOTSEEDPASSPHRASE": "/rootseedpassphrase",
+// "ROOTSEED": "/rootseed",
 
 // <Route path={routes.HELLOWORLD} component={HelloWorldPage} />

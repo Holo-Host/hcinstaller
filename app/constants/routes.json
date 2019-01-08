@@ -1,4 +1,7 @@
 {
+  "DEVICEBUNDLES": "/devicebundles",
+  "ROOTSEEDPASSPHRASE": "/rootseedpassphrase",
+  "ROOTSEED": "/rootseed",
   "WELCOMENEWUSER": "/welcomenewuser",
   "COREAPPS": "/coreappselection",
   "SEEDDERIVATION": "/seedgeneration",
