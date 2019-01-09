@@ -348,25 +348,25 @@ class Installation extends React.Component<WelcomeProps, {}> {
             <Grid container justify="center" spacing={16}>
               <ul>
               {softwareToInstall.map(software => (
-                <li>
-                {node_version ?
+                <li key={software.name}>
+                {software.name ?
                   <div className="checkbox">
+                  {software.name} Installed : {software.state_obj}
                     <label>
                       <input type="checkbox-checked" />
                       <span className="checkbox-material">
-                        <span classNam="check"></span>
+                        <span className="check"></span>
                       </span>
-                      {software.name} Installed : {software.state_obj}
                     </label>
                   </div>
                   :
                   <div className="checkbox">
+                  {software.name}
                     <label>
                       <input type="checkbox" />
                       <span className="checkbox-material">
                         <span classNam="check"></span>
                       </span>
-                      {software.name}
                     </label>
                   </div>
                 }
@@ -384,14 +384,14 @@ class Installation extends React.Component<WelcomeProps, {}> {
                    Review Holochain Info
                  </Link>
               </Fab>
-              <Fab color={container_installed ? "primary" : disabled} variant="extended" aria-label="next" className={classes.fab}>
+              <Fab color={container_installed ? "primary" : "disabled"} variant="extended" aria-label="next" className={classes.fab}>
                 {container_installed ?
                   <div>
                     <Icon className={classes.nextIcon} />
                     Generate Device Seed
                   </div>
                   :
-                  <Link to={routes.SEEDDERIVATION}>
+                  <Link to={routes.ROOTSEED}>
                    <Icon className={classes.nextIcon} />
                    Generate Device Seed
                  </Link>
@@ -410,7 +410,7 @@ Installation.propTypes = {
 };
 
 export default withStyles(styles)(Installation);
-
+//ROOTSEEDPASSPHRASE
 
 // <h3>Your Node Version: {node_version}</h3>
 // <h3>Your Rustup Version: {rustup_version}</h3>

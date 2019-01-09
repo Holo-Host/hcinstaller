@@ -24,25 +24,25 @@ const styles = {
   },
 };
 
-const numbers = [1,2,3,4,5,6,7,8,9,0];
+export const numbers = [1,2,3,4,5,6,7,8,9,0];
 
-const NumberSquare = props => (
+const NumberSquare = props => {
   const { classes } = props;
   const bulletPoint = <span className={classes.bullet}>•</span>;
   return (
     <Card className={classes.card} aria-label="click-item" onClick={() => props.handleClick(props.id)}>
-    <CardActions>
-      <Button>
-        <CardContent>
-          <Typography component="h2">
-            {props.number}
-          </Typography>
-        </CardContent>
+      <CardActions>
+        <Button>
+          <CardContent>
+            <Typography component="h2">
+              {props.number}
+            </Typography>
+          </CardContent>
         </Button>
       </CardActions>
     </Card>
   );
-)
+}
 
 NumberSquare.propTypes = {
   classes: PropTypes.object.isRequired,

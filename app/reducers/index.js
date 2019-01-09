@@ -6,7 +6,7 @@ import helloWorldReducer from './helloWorld';
 import { State as HelloWorldState } from '../actions/types';
 import welcomeReducer from './welcome';
 import installationReducer from './installation';
-import seedGenerationReducer from './seedGeneration';
+import devicePinReducer from './devicePin';
 import coreAppReducer from './coreAppSelection';
 // import counter from './counter';
 
@@ -20,7 +20,7 @@ export default function createRootReducer(history: History) {
     helloWorld: helloWorldReducer,
     welcomeReducer,
     installationReducer,
-    seedGenerationReducer,
+    devicePinReducer,
     coreAppReducer
     // counter
   });

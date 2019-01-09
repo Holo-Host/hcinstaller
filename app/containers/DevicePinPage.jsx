@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SeedGeneration from '../components/SeedGeneration';
-import * as SeedGenerationActions from '../actions/seedGeneration';
+import DevicePin from '../components/DevicePin';
+import * as DevicePinActions from '../actions/devicePin';
 
 type Props = {
   pin_set: boolean,
@@ -10,22 +10,22 @@ type Props = {
   fetch_state: () => void
 };
 
-class SeedGenerationPage extends Component<Props> {
+class DevicePinPage extends Component<Props> {
   constructor(props:Props){
     super(props);
   };
 
   render() {
-    return <SeedGeneration />;
+    return <DevicePin />;
   }
 }
 
-function mapStateToProps({seedGenerationReducer}) {
-  return {pin_set: seedGenerationReducer.pin_set};
+function mapStateToProps({devicePinReducer}) {
+  return {pin_set: devicePinReducer.pin_set};
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(SeedGenerationActions, dispatch);
+  return bindActionCreators(DevicePinActions, dispatch);
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SeedGenerationPage);
+export default connect(mapStateToProps,mapDispatchToProps)(DevicePinPage);

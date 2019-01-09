@@ -1,4 +1,4 @@
-import { FETCH_STATE, SET_PIN } from '../actions/seedGeneration';
+import { FETCH_STATE, SET_PIN } from '../actions/devicePin';
 
 const INITIAL_STATE : State = {
  pin_set  : false

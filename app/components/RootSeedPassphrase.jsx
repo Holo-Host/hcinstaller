@@ -1,10 +1,9 @@
-// description to be used in the info message:
-// The root (Hierarchical Deterministic) key facilities the creation and control of an identity that can then create subsequent child identities or personas depending on the context of the identity use case.
-/////////////////////////////////////////////////////////////////////////////
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+// electron:
+import * as electron from "electron";
 // MUI Imports:
 import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -16,6 +15,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
+import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -25,8 +25,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
+import Icon from '@material-ui/core/Icon';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { withStyles } from '@material-ui/core/styles';
 import Send from '@material-ui/icons/Send';
 // local imports:
@@ -35,159 +39,10 @@ import routes from '../constants/routes';
 import logo from '../assets/icons/HC-logo.svg';
 import customStyle from './Welcome.css';
 
-
-// MUI Custom Styling :
-const styles = theme => ({
-  root: {
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    minWidth: 300,
-  },
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    height: 140,
-    width: 100,
-  },
-  header1: {
-    marginTop: 45,
-    marginLeft: 88,
-  },
-  header2: {
-    margin: 45,
-    fontFamily: 'Raleway',
-    fontWeight: 500,
-    letterSpacing: 3
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-  typography: {
-    fontFamily: 'Raleway',
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-  control: {
-    padding: theme.spacing.unit * 2,
-  },
-  card: {
-  maxWidth: 400,
-},
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  actions: {
-    display: 'flex',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  button: {
-    margin: theme.spacing.unit,
-    color: '#eee',
-    backgroundColor: "#00A6AE"
-  },
-  input: {
-    display: 'none',
-  },
-  iconSection: {
-    flexGrow: 1,
-    margin: 10,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icons: {
-    width: 274,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconTitle:{
-    marginTop: 25,
-    color: '#eee' // #061630 #a3b0d7
-  },
-  fab: {
-    // margin: theme.spacing.unit,
-    margin: 54,
-    color: '#eee',
-    background: '#3d65d6',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '&:hover, &$focusVisible': {
-      border: '3px solid #6600ff',
-      background: 'rgba(0, 1, 127, 0.7)'
-    },
-  },
-  nextIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  nextBtn: {
-    width: 800,
-    color: '#eee',
-    fontSize: 20,
-    background: '#6600ff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '&:hover, &$focusVisible': {
-      fontSize: 25,
-      border: '3px solid #10d6a9',
-      background: 'rgba(0, 1, 127, 0.7)'
-    },
-  },
-  modalButton: {
-    marginTop:30,
-    color: '#eee', // #a3b0d7
-    border: '2px solid #6600ff',
-    background: 'rgba(0, 1, 127, 0.7)',
-    '&:hover, &$focusVisible': {
-      marginTop:16,
-      width: 300,
-      height: 50,
-      color: '#eee',
-      background: 'transparent',
-      border: '3px solid #10d6a9',
-    },
-  },
-  modal: {
-    marginTop: 33,
-  },
-  inline: {
-    display: 'inline-block'
-  },
-  focusVisible: {},
-  hcLogo: {
-    height: '15%',
-    position: 'fixed',
-    left: 2,
-    top: 2
-  },
-  closeIcon: {
-    margin: theme.spacing.unit,
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    fontSize: 10,
-    color: '#70a297',
-    border: '1px solid #70a297',
-    background: 'transparent',
-    '&:hover, &$focusVisible': {
-      border: '2px solid red',
-      color: 'red',
-      background: 'transparent',
-    },
-  }
-});
-
+// // MUI Custom Styling :
+import { styles } from "./componentImports/ImportsRootSeedPassphrase";
+// import importFn from "./componentImports/ImportsRootSeedPassphrase";
+// importfn();
 
 // typing :
 type WelcomeNewUserProps = {
@@ -198,6 +53,9 @@ type WelcomeNewUserState = {
   expanded: boolean,
   HCmodalOpen: boolean,
   installationNotice: boolean,
+  passwordNumber: number,
+  showPassword: boolean,
+  passwordSuccess: boolean,
   affirm: boolean
 }
 
@@ -212,20 +70,11 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
       expanded: false,
       HCmodalOpen: false,
       installationNotice: false,
+      passwordNumber: 0,
+      showPassword: false,
+      passwordSuccess: false,
       affirm: false
     };
-  };
-
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
-
-  handleClickHCinfoOpen = () => {
-    this.setState({ HCmodalOpen: true });
-  };
-
-  handleHCinfoClose = () => {
-    this.setState({ HCmodalOpen: false });
   };
 
   handleInstallationNoticeOpen = () => {
@@ -241,173 +90,154 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
       installationNotice: false,
       affirm: true
     });
-    // navigate to next page... as user has affirmed !!
-    this.props.history.push(routes.INSTALLATION);
-  };
 
+  };
   handleCloseWindow = () => {
     const { ipcRenderer } = electron;
     const quit = 'quit'
     ipcRenderer.send("window:close", quit);
   };
 
+  handlePassInputChange = key => event => {
+    // setValues({ ...values, [key]: event.target.value });
+    const newPwLength = this.state.passwordNumber;
+    newPwLength + 1;
+    this.setState({passwordNumber: newPwLength })
+    const key = event.target.value
+    console.log("This should be the password that was passed in...", key);
+  };
+
+   handleClickShowPassword = () => {
+    setState({ showPassword: !this.state.showPassword });
+  };
+
   render() {
     const { classes, fullScreen } = this.props;
-    const descriptionIcons = [
-      {
-        url: 'assets/icons/versatile.png',
-        title: 'Versatile',
-        description: '',
-        width: '100%',
-      },
-      {
-        url: 'assets/icons/peer-to-peer.png',
-        title: 'Peer-to-Peer',
-        description: '',
-        width: '100%',
-      },
-      {
-        url: 'assets/icons/check-mark-circle.png',
-        title: 'Agent Centric',
-        description: '',
-        width: '100%',
-      },
-    ];
-
     return (
       <Grid container className={classes.root} spacing={16}>
         <Fab aria-label="primary" className={classes.closeIcon} onClick={this.handleCloseWindow}>
           <Icon>X</Icon>
         </Fab>
         <div className={customStyle.container} data-tid="container">
-        <span className={classes.inline}>
-          <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
-        </span>
-          <h2 className={classes.header1}>We're so glad you're here!</h2>
-          <h3 className={classes.header2}>Let us welcome you into the community by introducing ourselves a bit more and offering you some additional resources.</h3>
+          <span className={classes.inline}>
+            <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
+          </span>
+          <h2 className={classes.header1}>Let's talk Cryptography</h2>
+          <h3 className={classes.header2}>Please type in a passphrase below in order to generate a Root Seed for this device. </h3>
 
-          <Grid item xs={12} className={classes.iconSection}>
-             <Grid container justify="center" spacing={16}>
-               {descriptionIcons.map(icon => (
-                 <Grid className={classes.icons} key={icon.title} item>
-                   <img src={icon.url} alt={`${icon.title}-image`}/>
-                   <Typography className={classes.iconTitle} variant="h5" component="h3">
-                    {icon.title}
-                   </Typography>
-                   <Typography component="p">
-                     {icon.description}
-                   </Typography>
-                 </Grid>
-               ))}
+          <Grid item xs={6} className={classes.passRoot}  elevation={1}>
+            <div className={classes.sectionInstructions}>
+             <Grid container alignItems="center" id="passphrase-container">
+               <Grid item xs>
+                 <Typography gutterBottom variant="h4">
+                   Set Your Passphrase
+                 </Typography>
+               </Grid>
+               <Grid item>
+                 <Typography gutterBottom variant="h6">
+                    INSTRUCTIONS FOR SETTING A PASSPHRASE
+                 </Typography>
+               </Grid>
              </Grid>
+             <Typography color="textSecondary">
+               The Root Seed is the core of your idenity within Holochain.  It facilities the creation and control of your identity on your device and device applications.  MORE INFO HERE...
+             </Typography>
+           </div>
+
+           <Divider variant="middle" />
+
+           <div className={classes.sectionPassphrase}>
+             <Typography gutterBottom variant="body1">
+               Enter Passpharase
+             </Typography>
+             <div>
+             <TextField
+                id="outlined-adornment-password"
+                className={classnames(classes.margin, classes.textField)}
+                variant="outlined"
+                type={this.state.showPassword ? 'text' : 'password'}
+                label="Password"
+                value={this.state.passwordNumber}
+                onChange={this.handlePassInputChange('password')}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton aria-label="Toggle password visibility" onClick={this.handleClickShowPassword}>
+                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+             </div>
+           </div>
+
+           <div className={classes.sectionSubmit}>
+               <Button variant="contained" color="primary" fullWidth>
+                  Submit Passphrase
+               </Button>
+           </div>
           </Grid>
 
-          <Grid item xs={12}>
-           <div className={classes.modal}>
-              <Button variant="outlined" className={classnames('learn-more',classes.modalButton)} onClick={this.handleClickHCinfoOpen}>
-               Learn more about Holochain
-              </Button>
-              <Dialog
-                open={this.state.HCmodalOpen}
-                TransitionComponent={ModalTransition}
-                keepMounted
-                onClose={this.handleHCinfoClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  {"Find out more"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-slide-description">
-                    <Card className={classes.card}>
-                      <CardHeader
-                        title="Take a closer look into Holochain"
-                      />
-                      <CardMedia
-                        className={classes.media}
-                        image="assets/images/distributed-hash-table_diagram.png"
-                        title="Holochain"
-                      />
-                      <CardContent>
-                        <Typography component="p">
-                          With Holochain you can build and participate in scalable distributed apps with data integrity, while also owning your own data, controling your idenity, tranacting without a centralixed system, and connecting to communities of applications able to be best suited for your needs.
-                        </Typography>
-                      </CardContent>
-                      <CardActions className={classes.actions} disableActionSpacing>
-                        <IconButton
-                          className={classnames(classes.expand, {
-                            [classes.expandOpen]: this.state.expanded,
-                          })}
-                          onClick={this.handleExpandClick}
-                          aria-expanded={this.state.expanded}
-                          aria-label="Show more"
-                        >
-                          <ExpandMoreIcon />
-                        </IconButton>
-                      </CardActions>
-                      <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                        <CardContent>
-                          <Typography paragraph>Curious to know more?</Typography>
-                          <Typography paragraph>
-                            We're glad to hear it!'
-                          </Typography>
-                          <Typography paragraph>
-                          Check out the following links to learn more about how Holochain help you protect your data, regain authorship of your interactions online, and even partipate in the developer community!
-                          </Typography>
-                          <Button className={classes.button} href="https://holochain.org/">
-                            Holochain.org
-                          </Button>
-                          <Button className={classes.button} href="https://holo.host/">
-                            Holo
-                          </Button>
-                          <Button className={classes.button} href="https://developer.holochain.org/">
-                            HC Developer Docs
-                          </Button>
-                        </CardContent>
-                      </Collapse>
-                    </Card>
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleHCinfoClose} color="primary">
-                    Close
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
+          <Grid item xs={6} className={classnames(classes.passRoot, classes.instructions)}  elevation={1}>
+            <div className={classes.sectionInstructions}>
+            <Grid container alignItems="center">
+              <Grid item xs>
+                <Typography gutterBottom variant="h4" className={classes.whiteText}>
+                What is a Root Seed?
+              </Typography>
+              </Grid>
+              <Divider variant="middle" />
+            <Grid item>
+            <Typography gutterBottom variant="h6" className={classes.whiteText}>
+              ROOT SEED EXPLAINATION...
+            </Typography>
+            </Grid>
+            </Grid>
+            <Typography color="textSecondary" className={classes.whiteText}>
+            More text about the Root Seed and how to store it go here...
+            </Typography>
+          </div>
+          <Divider variant="middle" className={classes.whiteText} />
+          <img src="assets/icons/fingerprint-security.png" alt="fingerprint image" className={classes.iconImg}/>
           </Grid>
 
-
-          <div className={classes.modal}>
-            <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
-               Start Intallation
-            </Fab>
+          <Divider variant="middle" />
+          {this.state.passwordSuccess ?
+            <div className={classes.modal}>
+              <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
+                 Discover Root Seed
+              </Fab>
              <Dialog
-              fullScreen={fullScreen}
-              open={this.state.installationNotice}
-              onClose={this.handleInstallationNoticeClose}
-              aria-labelledby="responsive-dialog-title"
+                fullScreen={fullScreen}
+                open={this.state.installationNotice}
+                onClose={this.handleInstallationNoticeClose}
+                aria-labelledby="responsive-dialog-title"
             >
               <DialogTitle id="responsive-dialog-title">{"Don't be scared, be prepared!"}</DialogTitle>
-                <DialogContentText>
-                You are about to receive your Root Seed Bundle (and mnemonics?...).
-                  1.Prepares user to receive this sensative info.
-                  2.Describes/reiterates importance of Root Seed.
-                </DialogContentText>
-              </DialogContent>
+                <DialogContent>
+                    <DialogContentText>
+                    You are about to receive your Root Seed Bundle (and mnemonics?...).
+                      1.Prepare user to receive this sensative info.
+                      2.Describe/reiterate importance of Root Seed.
+                    </DialogContentText>
+                </DialogContent>
               <DialogActions>
-                <Button onClick={this.handleInstallationNoticeClose} color="primary">
-                  Close
-                </Button>
-                <Link to={routes.ROOTSEED}>
-                  <Button onClick={this.handleInstallationNoticeCloseAffirm} color="primary" autoFocus>
-                    Let's Begin Installing!'
+                  <Button onClick={this.handleInstallationNoticeClose} color="primary">
+                    Close
                   </Button>
-                </Link>
+                  <Link to={routes.ROOTSEED}>
+                    <Button onClick={this.handleInstallationNoticeCloseAffirm} color="primary" autoFocus>
+                      Ready for my Root Seed
+                    </Button>
+                  </Link>
               </DialogActions>
-            </Dialog>
-           </div>
+              </Dialog>
+            </div>
+          :
+            <div/>
+          }
+
         </div>
       </Grid>
     )

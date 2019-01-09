@@ -15,13 +15,13 @@ import CoreAppSelectionPage from './containers/CoreAppSelectionPage';
 export default () => (
   <App>
     <Switch>
-      <Route path={routes.DEVICEBUNDLES} component={DeviceBundlePage} />
+      <Route path={routes.WELCOMENEWUSER} component={WelcomeNewUserPage} />
+      <Route path={routes.INSTALLATION} component={InstallationPage} />
       <Route path={routes.ROOTSEEDPASSPHRASE} component={RootSeedPassphrasePage} />
       <Route path={routes.ROOTSEED} component={RootSeedPage} />
-      <Route path={routes.WELCOMENEWUSER} component={WelcomeNewUserPage} />
+      <Route path={routes.DEVICEBUNDLES} component={DeviceBundlePage} />
+      <Route path={routes.DEVICEPIN} component={DevicePinPage} />
       <Route path={routes.COREAPPS} component={CoreAppSelectionPage} />
-      <Route path={routes.SEEDDERIVATION} component={DevicePinPage} />
-      <Route path={routes.INSTALLATION} component={InstallationPage} />
       <Route path={routes.WELCOME} component={WelcomePage} />
     </Switch>
   </App>

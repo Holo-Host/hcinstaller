@@ -1,11 +1,10 @@
 {
-  "DEVICEBUNDLES": "/devicebundles",
-  "ROOTSEEDPASSPHRASE": "/rootseedpassphrase",
-  "ROOTSEED": "/rootseed",
-  "WELCOMENEWUSER": "/welcomenewuser",
   "COREAPPS": "/coreappselection",
   "DEVICEPIN": "/devicepin",
+  "DEVICEBUNDLES": "/devicebundles",
+  "ROOTSEED": "/rootseed",
+  "ROOTSEEDPASSPHRASE": "/rootseedpassphrase",
   "INSTALLATION":"/installation",
-  "HELLOWORLD": "/helloworld",
+  "WELCOMENEWUSER": "/welcomenewuser",
   "WELCOME": "/"
 }

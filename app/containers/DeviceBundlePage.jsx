@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import DeviceBundle from '../components/DeviceBundle';
+import DeviceBundle from '../components/DeviceBundles';
 import * as WelcomeActions from '../actions/welcome';
 
 type Props = {
