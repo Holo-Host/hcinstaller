@@ -9,215 +9,147 @@ import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
-import Icon from '@material-ui/core/Icon';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Fab from '@material-ui/core/Fab';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField'
+import Icon from '@material-ui/core/Icon';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { withStyles } from '@material-ui/core/styles';
-import Close from '@material-ui/icons/Close';
+import Send from '@material-ui/icons/Send';
 // local imports:
+// import handleCloseWindow from '../utils/helper-functions';
 import routes from '../constants/routes';
-// import handleCloseWindow from '../utils/helper-functions'
-import logo from '../assets/icons/HC-logo.svg';
 import NumberSquare from "./subcomponents/NumberSquare";
 import { numbers } from "./subcomponents/NumberSquare";
-import customStyle from "./Welcome.css";
+import logo from '../assets/icons/HC-logo.svg';
+import customStyle from './Welcome.css';
 
-// MUI Custom Styling :
-const styles = theme => ({
-  root: {
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    minWidth: 300,
-  },
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    height: 140,
-    width: 100,
-  },
-  header1: {
-    marginTop: 45,
-    marginLeft: 88,
-  },
-  header2: {
-    margin: 45,
-    fontFamily: 'Raleway',
-    fontWeight: 500,
-    letterSpacing: 3
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-  typography: {
-    fontFamily: 'Raleway',
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-  actions: {
-    display: 'flex',
-  },
-  button: {
-    margin: theme.spacing.unit,
-    color: '#eee',
-    backgroundColor: "#00A6AE"
-  },
-  fab: {
-    // margin: theme.spacing.unit,
-    margin: 54,
-    color: '#eee',
-    background: '#3d65d6',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '&:hover, &$focusVisible': {
-      border: '3px solid #6600ff',
-      background: 'rgba(0, 1, 127, 0.7)'
-    },
-  },
-  inlineBlock: {
-    display: 'inline-block'
-  },
-  focusVisible: {},
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  hcLogo: {
-    height: '15%',
-    position: 'fixed',
-    left: 2,
-    top: 2
-  },
-  closeIcon: {
-    margin: theme.spacing.unit,
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    fontSize: 10,
-    color: '#70a297',
-    border: '1px solid #70a297',
-    background: 'transparent',
-    '&:hover, &$focusVisible': {
-      border: '2px solid red',
-      color: 'red',
-      background: 'transparent',
-    },
-  },
-  pinPad: {
-    margin: 50,
-    background: '#e0a919',
-    maxHeight: 750,
-    display: 'flex',
-    flexFlow: 'row wrap',
-    padding: 20,
-    justifyContent: 'space-around',
-    aligncontent: 'flex-start',
-    overflow: 'auto',
-  }
-});
+// // MUI Custom Styling :
+import { styles } from "./componentImports/ImportsRootSeedPassphrase";
+// import importFn from "./componentImports/ImportsRootSeedPassphrase";
+// importfn();
 
-type devicePinProps = {
-  pin_set: boolean,
-  set_pin: () => void,
-  fetch_state: () => void
+// typing :
+type WelcomeNewUserProps = {
+  fetch_state: () => void,
 }
 
-type devicePinState = {
-  numbers: any,
-  pinSuccess: false
+type WelcomeNewUserState = {
+  expanded: boolean,
+  HCmodalOpen: boolean,
+  installationNotice: boolean,
+  passwordNumber: array,
+  showPassword: boolean,
+  pinSuccess: boolean,
+  affirm: boolean
 }
 
-class DevicePin extends React.Component<devicePinProps, {}> {
+function ModalTransition(props) {
+  return <Slide direction="down" {...props} />;
+}
+
+class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSeedPassphraseState>{
   constructor(props:WelcomeProps){
     super(props);
     this.state = {
-      numbers,
-      pinSuccess: true // TODO: change back to false
+      expanded: false,
+      HCmodalOpen: false,
+      installationNotice: false,
+      pinNumber: [],
+      showPassword: false,
+      message: "",
+      pinSuccess: true, // TODO: CHANGE BACK TO 'false'
+      affirm: false,
+      numbers
     };
+    this.handleSubmitPassword = this.handleSubmitPassword.bind(this);
+    this.sendFormData = this.sendFormData.bind(this);
+    this.PinRef = React.createRef();
   };
 
-  componenetDidMount() {
+  handleInstallationNoticeOpen = () => {
+    this.setState({ installationNotice: true });
+  };
+
+  handleInstallationNoticeClose = () => {
+    this.setState({ installationNotice: false });
+  };
+
+  handleInstallationNoticeCloseAffirm = () => {
     this.setState({
-      numbers: this.shufflePics(this.state.numbers)
-    })
-  };
-
-  // handleInputChange = name => event => {
-  //   this.setState({
-  //     [name]: event.target.value,
-  //   });
-  // };
-
-  shuffleNumbers = numbers => {
-    let currentIndex = numbers.length - 1;
-    while (currentIndex > 0){
-      const randomNum = Math.floor(Math.random() * (currentIndex + 1));
-      const lastIndexPlaceholder = numbers[currentIndex];
-      numbers[currentIndex] = numbers[randomNum];
-      numbers[randomNum] = lastIndexPlaceholder;
-      currentIndex--;
-    }
-    return numbers;
-  }
-
-  reset = numbers => {
-    const resetNumberLog = numbers.map(num => ({ ...num, clicked: false}) );
-    return this.shuffleNumbers(resetNumberLog);
-  }
-
-  handleRefresh = numbers => {
-    this.setState ({
-      numbers: this.reset(numbers),
-    })
-  }
-
-  handleItemClick = id => {
-    let satisfactoryLength = false;
-    // const pinpass = [];
-
-    const numbers = this.state.numbers.map(num => {
-      const newNumber = { ...num };
-      if (newNumber.id === id) {
-        if(!newNumber.clicked) {
-          newNumber.clicked = true;
-        }
-        else if (newNumber.clicked) {
-          const lastNumber = [penpass.length-1];
-          if (lastNumber === newNumber) {
-            // TODO : Create proper alter with imporved error message....
-            alert("Sorry, no consecutive numbers are allowed in your pin code.")
-          }
-        }
-        // pinpass.push(newNumber);
-
-      }
+      installationNotice: false,
+      affirm: true
     });
-  }
 
-  handleSubmitPin= () => {
-    if(pin.length > 4 ) {
-      this.setState({
-        pinSuccess: true
-      })
-      // TODO : Make API call out to the container to send PIN.
-    }
-    else {
-      alert("Hey there. It looks like you need to increase the length of your Pin Code. The pin code must be at least 4 numbers in total in length.")
-    }
   };
-
   handleCloseWindow = () => {
     const { ipcRenderer } = electron;
     const quit = 'quit'
     ipcRenderer.send("window:close", quit);
   };
 
-  render() {
-    console.log("NUMBER FILE : ", this.state.numbers);
+  handlePassInputChange = key => event => {
+    // setValues({ ...values, [key]: event.target.value });
+    const newPinLength = this.state.passwordNumber;
+    newPinLength.push("x");
+    this.setState({passwordNumber: newPinLength })
 
+    const key = event.target.value
+    console.log("This should be the PIN that was passed in...", key);
+  };
+
+  handleClickShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+   };
+
+   sendFormData() {
+     console.log("inside sendFormData...");
+     console.log("PASS REF", this.PinRef.current.focus());
+
+     const SubmittedPassData = {
+       passphrase: this.refs.Passphrase.value
+     };
+     console.log(SubmittedPassData);
+
+     if(SubmittedPassData.length > 8 ) {
+       console.log("passed length test...");
+       // TODO : Make API call out to the container to send PASSWORD.
+     }
+     else {
+       alert("Hey there. It looks like your passphrase doesn't meet the minimum security requirements. Please review the requirements and reenter your passphrase.")
+     }
+     setTimeout(() => {
+       this.setState({
+         message: "Password created!",
+         passwordNumber: [],
+         passwordSuccess: true
+       });
+     }, 3000);
+   }
+
+   handleSubmitPassword = event => {
+     event.preventDefault();
+     this.setState({ message: "Verifying Passphrase..." });
+     this.sendFormData();
+   };
+  render() {
     const { classes, fullScreen } = this.props;
     return (
       <Grid container className={classes.root} spacing={16}>
@@ -225,58 +157,148 @@ class DevicePin extends React.Component<devicePinProps, {}> {
           <Icon>X</Icon>
         </Fab>
         <div className={customStyle.container} data-tid="container">
-        <span className={classes.inline}>
-          <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
-        </span>
-        <h2 className={classes.header1}>Device Pin Generation</h2>
-        <h3 className={classes.header2}>Please enter in a Device Pin.  This Pin will be used alongside your Device Bundle to generate a Device Seed on each of your devices to ensure your identity within Holochain is unique and protected.</h3>
+          <span className={classes.inline}>
+            <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
+          </span>
+          <h2 className={classes.header1}>Device Pin Generation</h2>
+          <h3 className={classes.header2}>This Pin will be used alongside your Device Bundle to generate a Device Seed on each of your devices to ensure your identity within Holochain is unique and protected. </h3>
 
-          <Grid item xs={12} className={classes.iconSection}>
-             <Grid container justify="center" spacing={16}>
-               <Paper className={classes.root} elevation={1}>
-                 <Typography variant="h5" component="h3">
-                   How to choose a PIN.
+          {this.state.pinSuccess ?
+            <Grid item xs={12} elevation={1}>
+              <div className={classes.modal} className={classes.root}  >
+                <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
+                   Return to Device Bundles
+                </Fab>
+               <Dialog
+                  fullScreen={fullScreen}
+                  open={this.state.installationNotice}
+                  onClose={this.handleInstallationNoticeClose}
+                  aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title">{"You're almost there!"}</DialogTitle>
+                  <DialogContent>
+                      <DialogContentText>
+                      Congrats! You have now created a PIN that will be used to access your Holochain identity whenever you initiate installation of Holochain on a new device.
+                      <br/>
+                      Please note that the storing of this PIN is critically related to the security and privacy of your Holochain identity.  Please do not share this with anyone.
+                      </DialogContentText>
+                  </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleInstallationNoticeClose} color="primary">
+                      Close
+                    </Button>
+                    <Link to={routes.DEVICEBUNDLES}>
+                      <Button onClick={this.handleInstallationNoticeCloseAffirm} color="primary" autoFocus>
+                        Return to Device Bundles
+                      </Button>
+                    </Link>
+                </DialogActions>
+                </Dialog>
+              </div>
+            </Grid>
+          :
+            <div/>
+          }
+
+          <Grid item xs={6} className={classes.passRoot}  elevation={1}>
+            <div className={classes.sectionInstructions}>
+             <Grid container alignItems="center" id="passphrase-container">
+               <Grid item xs>
+                 <Typography gutterBottom variant="h4">
+                   Set Your Device PIN
                  </Typography>
-                 <Typography component="p">
-                   INSTRUCTIONS FOR SETTING DEVICE PIN
+               </Grid>
+               <Grid item>
+                 <Typography gutterBottom variant="h6">
+                    INSTRUCTIONS FOR SETTING A DEVICE PIN
                  </Typography>
-               </Paper>
+               </Grid>
              </Grid>
-          </Grid>
+             <Typography color="textSecondary">
+                STEPS GO HERE...
+             </Typography>
+           </div>
 
-          <div className={classnames(classes.pinPad, 'viewDetails')}>
-          {this.state.numbers.map(item => (
-            <NumberSquare
-              key={item.number}
-              number={item.number}
-              className="viewDetails"
-              handleClick={this.handleItemClick}
-            />
-          ))}
+           <Divider variant="middle" />
+
+           <div className={classes.sectionPassphrase}>
+             <form onSubmit={this.handleSubmitPassword}>
+               <Typography gutterBottom variant="body1">
+                 Enter PIN
+               </Typography>
+               <div>
+             ///////////////////////////
+
+               <div className={classnames(classes.pinPad, 'viewDetails')}>
+               {this.state.numbers.map(num => (
+                 <NumberSquare
+                   key={num.number}
+                   number={num.number}
+                   className="viewDetails"
+                   handleClick={this.handleItemClick}
+                 />
+               ))}
+               </div>
+
+             ///////////////////////////
+
+               <TextField
+                  id="outlined-adornment-password"
+                  className={classnames(classes.margin, classes.textField)}
+                  variant="outlined"
+                  type={this.state.showPassword ? 'text' : 'password'}
+                  label="Password"
+                  aria-label="Passphrase"
+                  ref={this.PassphraseRef}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton aria-label="Toggle password visibility" className="viewDetails" onClick={this.handleClickShowPassword}>
+                          {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+             </div>
+
+             <div className={classes.sectionSubmit}>
+               <Button type="submit" variant="contained" color="primary" fullWidth>
+                 Submit Passphrase
+               </Button>
+             </div>
+           </form>
+         </div>
+        </Grid>
+
+          <Grid item xs={6} className={classnames(classes.passRoot, classes.instructions)}  elevation={1}>
+            <div className={classes.sectionInstructions}>
+            <Grid container alignItems="center">
+              <Grid item xs>
+                <Typography gutterBottom variant="h4" className={classes.whiteText}>
+                  What is a Device PIN?
+                </Typography>
+              </Grid>
+              <Divider variant="middle" />
+              <Grid item>
+                <Typography gutterBottom variant="h6" className={classes.whiteText}>
+                  Device PIN EXPLAINATION goes here...
+                </Typography>
+              </Grid>
+            </Grid>
           </div>
-
-          <form className={classes.container} noValidate autoComplete="off">
-            <TextField
-              id="outlined-password-input"
-              label="Password"
-              className={classes.textField}
-              type="password"
-              margin="normal"
-              variant="outlined"
-            />
-
-            <Button variant="contained" color="primary" fullWidth handleClick={this.handleItemClick}>
-               Submit Passphrase
-            </Button>
-          </form>
+          <Divider variant="middle" className={classes.whiteText} />
+          <img src="assets/icons/fingerprint-security.png" alt="fingerprint image" className={classes.iconImg}/>
+          </Grid>
+          <Divider variant="middle" />
         </div>
       </Grid>
     )
   }
 }
 
-DevicePin.defaultProps = {
-  pin_set: false
-}
+RootSeedPassphrase.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default withStyles(styles)(DevicePin);
+export default withStyles(styles)(RootSeedPassphrase);

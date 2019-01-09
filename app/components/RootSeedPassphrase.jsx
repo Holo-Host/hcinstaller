@@ -53,8 +53,9 @@ type WelcomeNewUserState = {
   expanded: boolean,
   HCmodalOpen: boolean,
   installationNotice: boolean,
-  passwordNumber: number,
+  passwordNumber: array,
   showPassword: boolean,
+  message: string,
   passwordSuccess: boolean,
   affirm: boolean
 }
@@ -70,11 +71,15 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
       expanded: false,
       HCmodalOpen: false,
       installationNotice: false,
-      passwordNumber: 0,
+      passwordNumber: [],
       showPassword: false,
+      message: "",
       passwordSuccess: true, // TODO: CHANGE BACK TO 'false'
       affirm: false
     };
+    this.handleSubmitPassword = this.handleSubmitPassword.bind(this);
+    this.sendFormData = this.sendFormData.bind(this);
+    this.PassphraseRef = React.createRef();
   };
 
   handleInstallationNoticeOpen = () => {
@@ -101,14 +106,45 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
   handlePassInputChange = key => event => {
     // setValues({ ...values, [key]: event.target.value });
     const newPwLength = this.state.passwordNumber;
-    newPwLength + 1;
+    newPwLength.push("x");
     this.setState({passwordNumber: newPwLength })
     const key = event.target.value
     console.log("This should be the password that was passed in...", key);
   };
 
    handleClickShowPassword = () => {
-    setState({ showPassword: !this.state.showPassword });
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+
+  sendFormData() {
+    console.log("inside sendFormData...");
+    console.log("PASS REF", this.PassphraseRef.current.focus());
+
+    const SubmittedPassData = {
+      passphrase: this.refs.Passphrase.value
+    };
+    console.log(SubmittedPassData);
+
+    if(SubmittedPassData.length > 8 ) {
+      console.log("passed length test...");
+      // TODO : Make API call out to the container to send PASSWORD.
+    }
+    else {
+      alert("Hey there. It looks like your passphrase doesn't meet the minimum security requirements. Please review the requirements and reenter your passphrase.")
+    }
+    setTimeout(() => {
+      this.setState({
+        message: "Password created!",
+        passwordNumber: [],
+        passwordSuccess: true
+      });
+    }, 3000);
+  }
+
+  handleSubmitPassword = event => {
+    event.preventDefault();
+    this.setState({ message: "Verifying Passphrase..." });
+    this.sendFormData();
   };
 
   render() {
@@ -126,8 +162,8 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
           <h3 className={classes.header2}>Please type in a passphrase below in order to generate a Root Seed for this device. </h3>
 
           {this.state.passwordSuccess ?
-            <Grid item xs={6} className={classes.passRoot}  elevation={1}>
-              <div className={classes.modal}>
+            <Grid item xs={12} elevation={1}>
+              <div className={classes.modal} className={classes.root}  >
                 <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
                    Discover Root Seed
                 </Fab>
@@ -177,42 +213,46 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
                </Grid>
              </Grid>
              <Typography color="textSecondary">
-               The Root Seed is the core of your idenity within Holochain.  It facilities the creation and control of your identity on your device and device applications.  MORE INFO HERE...
+               The Root Seed is the core of your idenity within Holochain.  It facilities the creation and control of your identity on your device and device applications.
+               <br/>MORE INFO HERE...
              </Typography>
-           </div>
+            </div>
 
            <Divider variant="middle" />
 
            <div className={classes.sectionPassphrase}>
-             <Typography gutterBottom variant="body1">
-               Enter Passpharase
-             </Typography>
-             <div>
-             <TextField
-                id="outlined-adornment-password"
-                className={classnames(classes.margin, classes.textField)}
-                variant="outlined"
-                type={this.state.showPassword ? 'text' : 'password'}
-                label="Password"
-                value={this.state.passwordNumber}
-                onChange={this.handlePassInputChange('password')}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton aria-label="Toggle password visibility" onClick={this.handleClickShowPassword}>
-                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-             </div>
-           </div>
+              {this.state.message}
+             <form onSubmit={this.handleSubmitPassword}>
+               <Typography gutterBottom variant="body1">
+                 Enter Passpharase
+               </Typography>
+               <div>
+                 <TextField
+                    id="outlined-adornment-password"
+                    className={classnames(classes.margin, classes.textField)}
+                    variant="outlined"
+                    type={this.state.showPassword ? 'text' : 'password'}
+                    label="Password"
+                    aria-label="Passphrase"
+                    ref={this.PassphraseRef}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton aria-label="Toggle password visibility" className="viewDetails" onClick={this.handleClickShowPassword}>
+                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+               </div>
 
-           <div className={classes.sectionSubmit}>
-               <Button variant="contained" color="primary" fullWidth>
-                  Submit Passphrase
-               </Button>
+               <div className={classes.sectionSubmit}>
+                 <Button type="submit" variant="contained" color="primary" fullWidth>
+                   Submit Passphrase
+                 </Button>
+               </div>
+             </form>
            </div>
           </Grid>
 

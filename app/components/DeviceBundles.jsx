@@ -209,6 +209,8 @@ const bundles = [
 
 
 type deviceBundleProps = {
+  // pin_set: boolean
+  // set_pin: () => void,
   fetch_state: () => void,
 }
 
@@ -223,9 +225,22 @@ class DeviceBundles extends React.Component {
   	//setting this.state.bundles to equal the bundles json array:
   	this.state = {
   		bundles,
-      pinSet: false
+      pinSet: true // TODO: CHANGE BACK TO 'false'
   	};
   };
+
+  componenetDidMount() {
+  // TODO: Check to see if the PIN is set, and if so.. update Component State...
+    // this.setState({
+    //   pinSet: this.props.pin_set
+    // })
+  };
+
+  handlePinSet = () => {
+    console.log("handlePinSet Triggered...");
+// TODO: TRigger the action to update the set_pin prop.
+    // this.props.set_pin();
+  }
 
    handleCloseWindow = () => {
      const { ipcRenderer } = electron;
@@ -249,20 +264,20 @@ class DeviceBundles extends React.Component {
           <h3 className={classes.header2}>Please store these items safely in a secure envionrment.</h3>
 
         <Grid item xs={12}  elevation={1}>
-          <Link to={this.state.pinSet ? routes.DEVICEPIN : routes.COREAPPS }>
-            <Fab color="primary" variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
-            {this.state.pinSet ? 'Install Core Apps Create Device PIN': 'Create Device PIN' }
+          <Link to={this.state.pinSet ? routes.COREAPPS : routes.DEVICEPIN }>
+            <Fab onClick={this.handlePinSet} color="primary" variant="extended" aria-label="next" className={classes.nextBtn}>
+            {this.state.pinSet ? 'Install Core Apps': 'Create Device PIN' }
             </Fab>
           </Link>
         </Grid>
 
-        <Grid item xs={8} className={classnames(classes.passRoot)}  elevation={1}>
+        <Grid item xs={6} className={classnames(classes.passRoot)}  elevation={1}>
           <Divider variant="middle" />
-          {this.state.bundles.map(item => (
+          {this.state.bundles.map(bundle => (
             <DeviceBundleBox
-              key={item.key}
-              name={item.name}
-              bundle={item.bundle}
+              key={bundle.id}
+              name={bundle.name}
+              bundle={bundle.bundle}
             />
           ))}
         </Grid>

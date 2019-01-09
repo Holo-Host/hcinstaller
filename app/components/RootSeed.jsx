@@ -38,9 +38,9 @@ const styles = theme => ({
     minWidth: 300,
   },
   passRoot: {
-   marginTop: 30,
+   marginTop: 95,
    width: '100%',
-   maxWidth: 360,
+   maxWidth: 500,
    backgroundColor: theme.palette.background.paper,
  },
   paper: {
@@ -134,7 +134,7 @@ const styles = theme => ({
   },
   iconImg: {
     maxWidth: 140,
-    marginTop: -65,
+    marginTop: -150,
   },
   nextBtn :{
     marginTop: 50,
@@ -213,7 +213,7 @@ class RootSeed extends React.Component {
           <h2 className={classes.header1}>Your Root Seed Bundle</h2>
           <h3 className={classes.header2}>This is your Holochain fingerprint. Please handle and save your Root Seed Bundle with extreme care.</h3>
 
-          <Grid item xs={6} className={classnames(classes.passRoot, classes.instructions)}  elevation={1}>
+          <Grid item xs={12} className={classnames(classes.passRoot, classes.instructions)}  elevation={1}>
           <img src="assets/icons/key-icon.png" alt="Root Bundle Icon" className={classes.iconImg}/>
             <div className={classes.sectionInstructions}>
               <Grid container alignItems="center">

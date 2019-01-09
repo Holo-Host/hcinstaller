@@ -55,8 +55,8 @@ const styles = theme => ({
   },
   viewDetails: {
     position: 'absolute',
-    top: 5,
-    right: 30
+    top: 7,
+    right: 50
   }
 });
 

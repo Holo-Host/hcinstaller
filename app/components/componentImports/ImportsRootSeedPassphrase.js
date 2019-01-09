@@ -7,6 +7,7 @@ export const styles = theme => ({
     minWidth: 300,
   },
   passRoot: {
+   marginTop: -25,
    width: '100%',
    maxWidth: 360,
    margin: 10,
@@ -63,6 +64,7 @@ export const styles = theme => ({
   fab: {
     // margin: theme.spacing.unit,
     margin: 54,
+    // marginTop:-10,
     color: '#eee',
     background: '#3d65d6',
     justifyContent: 'center',
@@ -76,15 +78,19 @@ export const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
   nextBtn: {
-    width: 800,
+    position:'relative',
+    left:'51.25%',
+    bottom:0,
+    width: 350,
     color: '#eee',
     fontSize: 20,
+    display:'flex',
     background: '#6600ff',
     justifyContent: 'center',
     alignItems: 'center',
     '&:hover, &$focusVisible': {
-      fontSize: 25,
-      border: '3px solid #10d6a9',
+      fontSize: 18,
+      border: '2px solid #10d6a9',
       background: 'rgba(0, 1, 127, 0.7)'
     },
   },
@@ -144,11 +150,11 @@ export const styles = theme => ({
   },
   iconImg: {
     width: 140,
-    marginTop: 50
+    marginTop: 10
   },
   instructions: {
     color: '#eee',
-    marginTop: 18,
+    marginTop: 10,
     maxHeight: 450,
     background: '#4f83a4',
     border: '3px solid #00017fb3'
@@ -156,6 +162,16 @@ export const styles = theme => ({
   whiteText: {
     color: "#eee",
     textAlign: 'center'
+  },
+  pinPad: {
+    margin: 50,
+    maxHeight: 150,
+    display: 'flex',
+    flexFlow: 'row wrap',
+    padding: 1,
+    justifyContent: 'space-around',
+    aligncontent: 'flex-start',
+    overflow: 'auto',
   }
 });
 

@@ -131,12 +131,12 @@ const styles = theme => ({
   nextBtn: {
     width: 800,
     color: '#eee',
-    fontSize: 20,
+    fontSize: 23,
     background: '#6600ff',
     justifyContent: 'center',
     alignItems: 'center',
     '&:hover, &$focusVisible': {
-      fontSize: 25,
+      fontSize: 20,
       border: '3px solid #10d6a9',
       background: 'rgba(0, 1, 127, 0.7)'
     },
@@ -353,7 +353,7 @@ class WelcomeNewUser extends React.Component<WelcomeNewUserProps, WelcomeNewUser
 
           <div className={classes.modal}>
             <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
-               Start Intallation
+               Start Installation
             </Fab>
              <Dialog
               fullScreen={fullScreen}
