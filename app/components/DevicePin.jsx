@@ -135,7 +135,7 @@ class DevicePin extends React.Component<devicePinProps, {}> {
     super(props);
     this.state = {
       numbers,
-      pinSuccess: false
+      pinSuccess: true // TODO: change back to false
     };
   };
 
@@ -238,19 +238,19 @@ class DevicePin extends React.Component<devicePinProps, {}> {
                    How to choose a PIN.
                  </Typography>
                  <Typography component="p">
-                   INSTRUCTIONS FOR SETTING PIN
+                   INSTRUCTIONS FOR SETTING DEVICE PIN
                  </Typography>
                </Paper>
              </Grid>
           </Grid>
 
-          <div className={classes.pinPad}>
+          <div className={classnames(classes.pinPad, 'viewDetails')}>
           {this.state.numbers.map(item => (
             <NumberSquare
-            key={item.number}
-            id={item.number}
-            number={item.number}
-            handleClick={this.handleItemClick}
+              key={item.number}
+              number={item.number}
+              className="viewDetails"
+              handleClick={this.handleItemClick}
             />
           ))}
           </div>

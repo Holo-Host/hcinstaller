@@ -391,7 +391,7 @@ class Installation extends React.Component<WelcomeProps, {}> {
                     Generate Device Seed
                   </div>
                   :
-                  <Link to={routes.ROOTSEED}>
+                  <Link to={routes.ROOTSEEDPASSPHRASE}>
                    <Icon className={classes.nextIcon} />
                    Generate Device Seed
                  </Link>
@@ -410,7 +410,7 @@ Installation.propTypes = {
 };
 
 export default withStyles(styles)(Installation);
-//ROOTSEEDPASSPHRASE
+//  ROOTSEED
 
 // <h3>Your Node Version: {node_version}</h3>
 // <h3>Your Rustup Version: {rustup_version}</h3>

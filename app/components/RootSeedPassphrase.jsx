@@ -72,7 +72,7 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
       installationNotice: false,
       passwordNumber: 0,
       showPassword: false,
-      passwordSuccess: false,
+      passwordSuccess: true, // TODO: CHANGE BACK TO 'false'
       affirm: false
     };
   };
@@ -124,6 +124,43 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
           </span>
           <h2 className={classes.header1}>Let's talk Cryptography</h2>
           <h3 className={classes.header2}>Please type in a passphrase below in order to generate a Root Seed for this device. </h3>
+
+          {this.state.passwordSuccess ?
+            <Grid item xs={6} className={classes.passRoot}  elevation={1}>
+              <div className={classes.modal}>
+                <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
+                   Discover Root Seed
+                </Fab>
+               <Dialog
+                  fullScreen={fullScreen}
+                  open={this.state.installationNotice}
+                  onClose={this.handleInstallationNoticeClose}
+                  aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title">{"Don't be scared, be prepared!"}</DialogTitle>
+                  <DialogContent>
+                      <DialogContentText>
+                      You are about to receive your Root Seed Bundle (and mnemonics?...).
+                        1.Prepare user to receive this sensative info.
+                        2.Describe/reiterate importance of Root Seed.
+                      </DialogContentText>
+                  </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleInstallationNoticeClose} color="primary">
+                      Close
+                    </Button>
+                    <Link to={routes.ROOTSEED}>
+                      <Button onClick={this.handleInstallationNoticeCloseAffirm} color="primary" autoFocus>
+                        Ready for my Root Seed
+                      </Button>
+                    </Link>
+                </DialogActions>
+                </Dialog>
+              </div>
+            </Grid>
+          :
+            <div/>
+          }
 
           <Grid item xs={6} className={classes.passRoot}  elevation={1}>
             <div className={classes.sectionInstructions}>
@@ -201,43 +238,7 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
           <Divider variant="middle" className={classes.whiteText} />
           <img src="assets/icons/fingerprint-security.png" alt="fingerprint image" className={classes.iconImg}/>
           </Grid>
-
           <Divider variant="middle" />
-          {this.state.passwordSuccess ?
-            <div className={classes.modal}>
-              <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
-                 Discover Root Seed
-              </Fab>
-             <Dialog
-                fullScreen={fullScreen}
-                open={this.state.installationNotice}
-                onClose={this.handleInstallationNoticeClose}
-                aria-labelledby="responsive-dialog-title"
-            >
-              <DialogTitle id="responsive-dialog-title">{"Don't be scared, be prepared!"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                    You are about to receive your Root Seed Bundle (and mnemonics?...).
-                      1.Prepare user to receive this sensative info.
-                      2.Describe/reiterate importance of Root Seed.
-                    </DialogContentText>
-                </DialogContent>
-              <DialogActions>
-                  <Button onClick={this.handleInstallationNoticeClose} color="primary">
-                    Close
-                  </Button>
-                  <Link to={routes.ROOTSEED}>
-                    <Button onClick={this.handleInstallationNoticeCloseAffirm} color="primary" autoFocus>
-                      Ready for my Root Seed
-                    </Button>
-                  </Link>
-              </DialogActions>
-              </Dialog>
-            </div>
-          :
-            <div/>
-          }
-
         </div>
       </Grid>
     )

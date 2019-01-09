@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import classnames from 'classnames';
 // MUI Imports:
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,6 +19,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { withStyles } from '@material-ui/core/styles';
 
 // // MUI Custom Styling :
 const styles = theme => ({
@@ -27,7 +28,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     borderTop: `1px solid ${theme.palette.divider}`,
     textAlign:'center',
-    
+
   },
   card: {
     display: 'flex',
@@ -52,6 +53,11 @@ const styles = theme => ({
     top: theme.spacing.unit,
     color: theme.palette.grey[500],
   },
+  viewDetails: {
+    position: 'absolute',
+    top: 5,
+    right: 30
+  }
 });
 
 // function DialogTitle ({ children, classes, onClose }) {
@@ -94,11 +100,11 @@ class DeviceBundleBox extends React.Component {
           <Typography className={classes.heading}>{this.props.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography>
-            INFO DESCRIBING BEST PRACTICES FOR STORING YOUR BUNDLE
+          <Typography component="h4">
+            Date Instantiated: { this.props.intializeDate ?  this.props.intializeDate : "Not yet in use" }
           </Typography>
            <div>
-            <Button className="viewDetails" size="small" variant="outlined" color="primary" onClick={this.handleClickOpenBundleDialog}>
+            <Button className={classnames(classes.viewDetails, "viewDetails")} size="small" variant="outlined" color="primary" onClick={this.handleClickOpenBundleDialog}>
               View Details
             </Button>
             <Dialog
@@ -111,10 +117,14 @@ class DeviceBundleBox extends React.Component {
               </DialogTitle>
               <DialogContent className={classes.root}>
 
-                <Typography gutterBottom>
-                  <h4>Type: {this.props.bundle.type}</h4>
-                  <h4>Hint: {this.props.bundle.hint}</h4>
-                  <h4>Data: {this.props.bundle.data}</h4>
+                <Typography component="h4" gutterBottom>
+                  Type: {this.props.bundle.type}
+                </Typography>
+                <Typography component="h4" gutterBottom>
+                  Hint: {this.props.bundle.hint}
+                </Typography>
+                <Typography component="h4" gutterBottom>
+                  Data: {this.props.bundle.data}
                 </Typography>
 
               </DialogContent>

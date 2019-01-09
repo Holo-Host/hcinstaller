@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
@@ -31,6 +32,14 @@ const styles = theme => ({
     flexWrap: 'wrap',
     minWidth: 300,
   },
+  passRoot: {
+   width: '100%',
+   maxWidth: 500,
+   margin: 10,
+   backgroundColor: theme.palette.background.paper,
+   color: 'white',
+   borderRadius: 8
+ },
   paper: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
@@ -115,6 +124,27 @@ const styles = theme => ({
     justifyContent: 'space-around',
     aligncontent: 'flex-start',
     overflow: 'auto',
+  },
+  nextBtn: {
+    marginTop:-30,
+    marginBottom:8,
+    width:200,
+    maxWidth:200
+  },
+  iconImg: {
+    width: 80,
+    marginTop: 15
+  },
+  instructions: {
+    color: '#eee',
+    marginTop: 18,
+    maxHeight: 200,
+    background: '#4f83a4',
+    border: '1px solid #eee'
+  },
+  whiteText: {
+    color: "#eee",
+    textAlign: 'center'
   }
 });
 
@@ -123,6 +153,8 @@ const bundles = [
   {
     name: "Bundle 1",
     id: "1",
+    nickname: "",
+    intializeDate: "",
     bundle: {
       type: "Device Seed",
       hint: "ZoElJettTech",
@@ -132,6 +164,8 @@ const bundles = [
   {
     name: "Bundle 2",
     id: "2",
+    nickname: "",
+    intializeDate: "",
     bundle: {
       type: "Device Seed",
       hint: "APPLICATION HINT",
@@ -141,6 +175,8 @@ const bundles = [
   {
     name: "Bundle 3",
     id: "3",
+    nickname: "",
+    intializeDate: "",
     bundle: {
       type: "Device Seed",
       hint: "My Special Hint",
@@ -150,6 +186,8 @@ const bundles = [
   {
     name: "Bundle 4",
     id: "4",
+    nickname: "",
+    intializeDate: "",
     bundle: {
       type: "Device Seed",
       hint: "My Special Hint",
@@ -159,6 +197,8 @@ const bundles = [
   {
     name: "Bundle 5",
     id: "5",
+    nickname: "",
+    intializeDate: "",
     bundle: {
       type: "Device Seed",
       hint: "My Special Hint",
@@ -208,43 +248,54 @@ class DeviceBundles extends React.Component {
           <h2 className={classes.header1}>Your Device Bundles</h2>
           <h3 className={classes.header2}>Please store these items safely in a secure envionrment.</h3>
 
-          <Grid item xs={12} className={classes.iconSection}>
-           <Grid container justify="center" spacing={16} className={classes.bundlePanel}>
-            {this.state.pinSet ?
-              <Typography>
-                 STEPS FOR HOW TO SAFELY STORE A DEVICE BUNDLE
-              </Typography>
-              :
-              <div>
-                <Typography>
-                    1.) INFORMATION ABOUT SETTING A DEVICE PIN
-                </Typography>
-                <Typography>
-                    2.) STEPS FOR HOW TO SAFELY STORE A DEVICE BUNDLE
-                </Typography>
+        <Grid item xs={12}  elevation={1}>
+          <Link to={this.state.pinSet ? routes.DEVICEPIN : routes.COREAPPS }>
+            <Fab color="primary" variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
+            {this.state.pinSet ? 'Install Core Apps Create Device PIN': 'Create Device PIN' }
+            </Fab>
+          </Link>
+        </Grid>
 
-                <br/>
+        <Grid item xs={8} className={classnames(classes.passRoot)}  elevation={1}>
+          <Divider variant="middle" />
+          {this.state.bundles.map(item => (
+            <DeviceBundleBox
+              key={item.key}
+              name={item.name}
+              bundle={item.bundle}
+            />
+          ))}
+        </Grid>
+
+        <Grid item xs={4} className={classnames(classes.passRoot, classes.instructions)}  elevation={1}>
+          <div className={classes.sectionInstructions}>
+            <Grid container alignItems="center">
+              <Divider variant="middle" />
+              <Grid item>
+              {this.state.pinSet ?
                 <div>
-                  <Link to={routes.DEVICEPIN}>
-                     <Button size="small" variant="outlined" color="primary">
-                        Set Device Pin
-                     </Button>
-                  </Link>
-                 </div>
-              </div>
-            }
+                  <Typography className={classes.whiteText}>
+                     STEPS FOR HOW TO SAFELY STORE A DEVICE BUNDLE
+                  </Typography>
+                  <img src="assets/icons/bundle-keys-icon.png" alt="Device Bundle Icon" className={classes.iconImg}/>
+                </div>
+                :
+                <div>
+                <br/>
+                  <Typography className={classes.whiteText}>
+                      1.) INFORMATION ABOUT SETTING A DEVICE PIN
+                  </Typography>
+                  <Typography className={classes.whiteText}>
+                      2.) STEPS FOR HOW TO SAFELY STORE A DEVICE BUNDLE
+                  </Typography>
+                  <img src="assets/icons/bundle-keys-icon.png" alt="Device Bundle Icon" className={classes.iconImg}/>
+                </div>
+               }
 
-             <br/>
-
-             {this.state.bundles.map(item => (
-               <DeviceBundleBox
-                 key={item.key}
-                 name={item.name}
-                 bundle={item.bundle}
-               />
-             ))}
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
+        </Grid>
         </div>
       </Grid>
     );

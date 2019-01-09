@@ -1,5 +1,8 @@
-import * as React from "react";
+import * as React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+// MUI Imports:
+import classnames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -30,7 +33,7 @@ const NumberSquare = props => {
   const { classes } = props;
   const bulletPoint = <span className={classes.bullet}>•</span>;
   return (
-    <Card className={classes.card} aria-label="click-item" onClick={() => props.handleClick(props.id)}>
+    <Card className={classnames(classes.card, 'viewDetails')} aria-label="click-item" onClick={() => props.handleClick(props.id)}>
       <CardActions>
         <Button>
           <CardContent>

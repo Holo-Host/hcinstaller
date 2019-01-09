@@ -308,6 +308,9 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
                         ... AND
                         <br/>
                         - Holochain Rust (latest version)
+                        <br/>
+                        <br/>
+                        ...and don't forget to bring your device key bundle!
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>

@@ -145,6 +145,8 @@ const styles = theme => ({
 const rootSeedBundle = {
     name: "My Root Seed Bundle",
     id: "RS1",
+    nickname: "",
+    intializeDate: "",
     bundle: {
       type: "Root Seed",
       hint: "ZoElJettTech",
@@ -212,7 +214,7 @@ class RootSeed extends React.Component {
           <h3 className={classes.header2}>This is your Holochain fingerprint. Please handle and save your Root Seed Bundle with extreme care.</h3>
 
           <Grid item xs={6} className={classnames(classes.passRoot, classes.instructions)}  elevation={1}>
-          <img src="assets/icons/key-icon.png" alt="fingerprint image" className={classes.iconImg}/>
+          <img src="assets/icons/key-icon.png" alt="Root Bundle Icon" className={classes.iconImg}/>
             <div className={classes.sectionInstructions}>
               <Grid container alignItems="center">
                 <Divider variant="middle" />
