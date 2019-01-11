@@ -184,6 +184,8 @@ const styles = theme => ({
 // typing :
 type WelcomeProps = {
   fetch_state: () => void,
+  call_holochain_instance_func: () => void,
+  call_zome_instance_func: ()=> void
 }
 
 type WelcomeState = {
@@ -203,6 +205,21 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
       installationNotice:false,
     };
   };
+
+  componentDidMount = () => {
+    this.triggerWebClientCall();
+    this.triggerZomeCall();
+  }
+
+  triggerWebClientCall = () => {
+    console.log("Welcome.js WS Call",this.props);
+    this.props.call_holochain_instance_func();
+  }
+
+  triggerZomeCall = () => {
+    console.log("Welcome.js ZOME WS Call",this.props);
+    this.props.call_zome_instance_func();
+  }
 
   handleClickHCinfoOpen = () => {
     this.setState({ HCmodalOpen: true });

@@ -141,7 +141,7 @@ const styles = theme => ({
   }
 });
 
-// THE BELOW SHOULD be be REPLACED by an API call and respnose with the DPKI
+// THE BELOW SHOULD be be REPLACED by an API call and response with the DPKI
 const rootSeedBundle = {
     name: "My Root Seed Bundle",
     id: "RS1",

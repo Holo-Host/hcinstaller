@@ -5,7 +5,9 @@ import Welcome from '../components/Welcome';
 import * as WelcomeActions from '../actions/welcome';
 
 type Props = {
-  fetch_state: () => void
+  fetch_state: () => void,
+  call_holochain_instance_func: () => void,
+  call_zome_instance_func: ()=> void
 };
 
 class WelcomePage extends Component<Props> {
@@ -14,7 +16,7 @@ class WelcomePage extends Component<Props> {
   };
 
   render() {
-    return <Welcome />;
+    return <Welcome {...this.props} />;
   }
 }
 

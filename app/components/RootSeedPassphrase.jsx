@@ -213,8 +213,7 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
                </Grid>
              </Grid>
              <Typography color="textSecondary">
-               The Root Seed is the core of your idenity within Holochain.  It facilities the creation and control of your identity on your device and device applications.
-               <br/>MORE INFO HERE...
+               INFO HERE...
              </Typography>
             </div>
 
@@ -267,12 +266,12 @@ class RootSeedPassphrase extends React.Component<RootSeedPassphraseProps, RootSe
               <Divider variant="middle" />
             <Grid item>
             <Typography gutterBottom variant="h6" className={classes.whiteText}>
-              ROOT SEED EXPLAINATION...
+               Description about the Root Seed and how to store it go here...
             </Typography>
             </Grid>
             </Grid>
             <Typography color="textSecondary" className={classes.whiteText}>
-            More text about the Root Seed and how to store it go here...
+              The Root Seed is the core of your idenity within Holochain.  It facilities the creation and control of your identity on your device and device applications.
             </Typography>
           </div>
           <Divider variant="middle" className={classes.whiteText} />

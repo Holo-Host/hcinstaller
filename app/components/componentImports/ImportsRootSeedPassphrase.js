@@ -149,8 +149,9 @@ export const styles = theme => ({
     margin: `${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px`,
   },
   iconImg: {
-    width: 140,
-    marginTop: 10
+    width: 110,
+    marginTop: 10,
+    marginBottom: 10
   },
   instructions: {
     color: '#eee',

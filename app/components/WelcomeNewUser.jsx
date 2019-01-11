@@ -2,6 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+// electron:
+import * as electron from "electron";
 // MUI Imports:
 import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -203,7 +205,7 @@ function ModalTransition(props) {
 }
 
 class WelcomeNewUser extends React.Component<WelcomeNewUserProps, WelcomeNewUserState>{
-  constructor(props:WelcomeProps){
+  constructor(props:WelcomeNewUserProps){
     super(props);
     this.state = {
       expanded: false,
@@ -278,7 +280,7 @@ class WelcomeNewUser extends React.Component<WelcomeNewUserProps, WelcomeNewUser
         </Fab>
         <div className={customStyle.container} data-tid="container">
         <span className={classes.inline}>
-          <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
+          <img src={logo} className={classnames("App-Logo", classes.hcLogo)} alt="logo" />
         </span>
           <h2 className={classes.header1}>We're so glad you're here!</h2>
           <h3 className={classes.header2}>Let us welcome you into the community by introducing ourselves a bit more and offering you some additional resources.</h3>

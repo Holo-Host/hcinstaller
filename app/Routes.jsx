@@ -10,6 +10,7 @@ import RootSeedPassphrasePage from './containers/RootSeedPassphrasePage';
 import DeviceBundlePage from './containers/DeviceBundlePage';
 import DevicePinPage from './containers/DevicePinPage';
 import CoreAppSelectionPage from './containers/CoreAppSelectionPage';
+import HappInstallationPage from './containers/HappInstallationPage';
 // import HelloWorldPage from './containers/HelloWorldPage';
 
 export default () => (
@@ -22,13 +23,10 @@ export default () => (
       <Route path={routes.DEVICEBUNDLES} component={DeviceBundlePage} />
       <Route path={routes.DEVICEPIN} component={DevicePinPage} />
       <Route path={routes.COREAPPS} component={CoreAppSelectionPage} />
+      <Route path={routes.HAPPINSTALLATION} component={HappInstallationPage} />
       <Route path={routes.WELCOME} component={WelcomePage} />
     </Switch>
   </App>
 );
-
-// "DEVICEBUNDLES": "/devicebundles",
-// "ROOTSEEDPASSPHRASE": "/rootseedpassphrase",
-// "ROOTSEED": "/rootseed",
 
 // <Route path={routes.HELLOWORLD} component={HelloWorldPage} />

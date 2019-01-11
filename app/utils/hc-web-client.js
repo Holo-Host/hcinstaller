@@ -21,3 +21,6 @@ export function getInstance (info: Array<{dna: string, agent: string, id: string
   }
   return null
 }
+
+// Command to run Rust Container (Habitat) in the CLI
+// cargo run -- -c example-config/basic.toml 
