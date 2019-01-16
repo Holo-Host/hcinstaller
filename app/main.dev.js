@@ -10,11 +10,12 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
+// in lieu of hot reloader
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -23,8 +24,8 @@ export default class AppUpdater {
   }
 }
 
-let mainWindow = null;
 
+let mainWindow = null;
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -69,8 +70,12 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: 1050,
+    height: 800,
+    resizable: false,
+    // titleBarStyle: 'hidden'
+    // titleBarStyle: 'customButtonsOnHover',
+    frame: false
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -99,4 +104,11 @@ app.on('ready', async () => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
+});
+
+// handle closing window (as menu will no longer be enabled) :
+ipcMain.on("window:close", ( event, quit ) => {
+  if(quit === 'quit') {
+    app.quit()
+  }
 });

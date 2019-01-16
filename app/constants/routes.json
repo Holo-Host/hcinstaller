@@ -1,4 +1,11 @@
 {
-  "HOME": "/",
-  "COUNTER": "/counter"
+  "HAPPINSTALLATION" : "/happinstallation",
+  "COREAPPS": "/coreappselection",
+  "DEVICEPIN": "/devicepin",
+  "DEVICEBUNDLES": "/devicebundles",
+  "ROOTSEED": "/rootseed",
+  "ROOTSEEDPASSPHRASE": "/rootseedpassphrase",
+  "INSTALLATION":"/installation",
+  "WELCOMENEWUSER": "/welcomenewuser",
+  "WELCOME": "/"
 }

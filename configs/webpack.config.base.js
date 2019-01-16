@@ -20,7 +20,15 @@ export default {
             cacheDirectory: true
           }
         }
-      }
+      },
+      {
+        // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+            loader: 'ts-loader',
+        },
+      },
     ]
   },
 
@@ -34,7 +42,7 @@ export default {
    * Determine the array of extensions that should be used to resolve modules.
    */
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
   },
 
   plugins: [
