@@ -146,6 +146,7 @@ class Installation extends React.Component<WelcomeProps, {}> {
       cargo_version: "",
       zmq_version: "",
       node_version: "",
+      returning_user: false // TODO: Default this to false  +  handle true case && handle the toggle case...
     };
     this.findCargoVersion = this.findCargoVersion.bind(this);
     this.findRustupVersion = this.findRustupVersion.bind(this);
@@ -307,7 +308,7 @@ class Installation extends React.Component<WelcomeProps, {}> {
 
     const { classes, fullScreen } = this.props;
     // const {node_version, rustup_version, cargo_version, hc_rust_version, zmq_version, container_installed} = this.props
-    const {node_version, rustup_version, cargo_version, hc_rust_version, zmq_version, container_installed} = this.state
+    const { node_version, rustup_version, cargo_version, hc_rust_version, zmq_version, container_installed, returning_user } = this.state
 
     const softwareToInstall = [
       {
@@ -386,15 +387,24 @@ class Installation extends React.Component<WelcomeProps, {}> {
               </Fab>
               <Fab color={container_installed ? "primary" : "disabled"} variant="extended" aria-label="next" className={classes.fab}>
                 {container_installed ?
-                  <div>
-                    <Icon className={classes.nextIcon} />
-                    Generate Device Seed
+                    <div>
+                      <Icon className={classes.nextIcon} />
+                      Generate Root Seed
+                    </div>
+                    :
+                    <div>
+                    {returning_user ?
+                      <Link to={routes.DEVICEPIN}>
+                       <Icon className={classes.nextIcon} />
+                       Enter Device Seed Bundle and PIN
+                     </Link>
+                     :
+                     <Link to={routes.ROOTSEEDPASSPHRASE}>
+                      <Icon className={classes.nextIcon} />
+                      Generate Root Seed
+                    </Link>
+                  }
                   </div>
-                  :
-                  <Link to={routes.ROOTSEEDPASSPHRASE}>
-                   <Icon className={classes.nextIcon} />
-                   Generate Device Seed
-                 </Link>
                 }
               </Fab>
            </Grid>

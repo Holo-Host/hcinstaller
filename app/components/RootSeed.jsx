@@ -252,18 +252,18 @@ class RootSeed extends React.Component {
                       </DialogContentText>
                       <br/>
                       <DialogContentText>
-                      You are about to receive your Root Seed Bundle (and mnemonics?...).
-                        1.Prepares user to receive this sensative info.
-                        2.Describes/reiterates importance of Device Bundles
+                      You are now about to create a Device PIN.
+                      <br/>
+                      DESCRIPTION OF DEVICE PIN (for the Device Seed Pin) & it's importance.
                       </DialogContentText>
                     </DialogContent>
                   <DialogActions>
                       <Button onClick={this.handleInstallationNoticeClose} color="primary">
                         Go Back
                       </Button>
-                      <Link to={routes.DEVICEBUNDLES}>
+                      <Link to={routes.DEVICEPIN}>
                         <Button onClick={this.handleInstallationNoticeCloseAffirm} color="primary" autoFocus>
-                          Ready for my Root Seed
+                          Ready to create my PIN.
                         </Button>
                       </Link>
                   </DialogActions>

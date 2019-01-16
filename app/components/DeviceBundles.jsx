@@ -251,22 +251,22 @@ class DeviceBundles extends React.Component {
   render() {
     const { classes }  = this.props;
     return (
-      <Grid container className={classes.root} spacing={16}>
-        <Fab aria-label="primary" className={classes.closeIcon} onClick={this.handleCloseWindow}>
+      <Grid container className={ classes.root } spacing={16}>
+        <Fab aria-label="primary" className={ classes.closeIcon } onClick={this.handleCloseWindow}>
           <Icon>X</Icon>
         </Fab>
-        <div className={customStyle.container} data-tid="container">
+        <div className={ customStyle.container } data-tid="container">
           <span className={classes.inline}>
-            <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
+            <img src={logo} className={ "App-Logo", classes.hcLogo } alt="logo" />
           </span>
 
-          <h2 className={classes.header1}>Your Device Bundles</h2>
-          <h3 className={classes.header2}>Please store these items safely in a secure envionrment.</h3>
+          <h2 className={ classes.header1 }>Your Device Bundles</h2>
+          <h3 className={ classes.header2 }>Please store these items safely in a secure envionrment.</h3>
 
         <Grid item xs={12}  elevation={1}>
-          <Link to={this.state.pinSet ? routes.COREAPPS : routes.DEVICEPIN }>
+          <Link to={ routes.COREAPPS }>
             <Fab onClick={this.handlePinSet} color="primary" variant="extended" aria-label="next" className={classes.nextBtn}>
-            {this.state.pinSet ? 'Install Core Apps': 'Create Device PIN' }
+              Install Core Apps
             </Fab>
           </Link>
         </Grid>
@@ -287,14 +287,6 @@ class DeviceBundles extends React.Component {
             <Grid container alignItems="center">
               <Divider variant="middle" />
               <Grid item>
-              {this.state.pinSet ?
-                <div>
-                  <Typography className={classes.whiteText}>
-                     STEPS FOR HOW TO SAFELY STORE A DEVICE BUNDLE
-                  </Typography>
-                  <img src="assets/icons/bundle-keys-icon.png" alt="Device Bundle Icon" className={classes.iconImg}/>
-                </div>
-                :
                 <div>
                 <br/>
                   <Typography className={classes.whiteText}>
@@ -305,7 +297,6 @@ class DeviceBundles extends React.Component {
                   </Typography>
                   <img src="assets/icons/bundle-keys-icon.png" alt="Device Bundle Icon" className={classes.iconImg}/>
                 </div>
-               }
 
               </Grid>
             </Grid>

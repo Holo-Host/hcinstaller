@@ -117,6 +117,10 @@ const styles = theme => ({
       color: 'red',
       background: 'transparent',
     },
+  },
+  checkboxSection : {
+    color: '#eee',
+    margin: 5,
   }
 });
 
@@ -131,7 +135,7 @@ function ModalTransition(props) {
 }
 
 const coreHapps = [
-  { 
+  {
     type: "Administrator Interface",
     options: ["HC Admin"]
   },{
@@ -166,7 +170,7 @@ const coreHapps = [
       affirm: false
     };
   };
-  
+
   componentDidMount = () => {
     this.setState({
       coreHapps
@@ -214,7 +218,7 @@ const coreHapps = [
           <h2 className={classes.header1}>Select your Core hApps</h2>
           <img src={logo} className={classnames("App-Logo", classes.hcLogo)} alt="logo" />
           <h3 className={classes.header2}>Let us welcome you into the community by introducing ourselves a bit more and offering you some additional resources.</h3>
-          
+
           <Grid className="viewDetails" item xs={12} className={classes.checkboxSection}>
             <Grid className="viewDetails" container justify="center" spacing={16}>
               {this.state.coreHapps.map(hApp => (
@@ -261,28 +265,26 @@ const coreHapps = [
                   <DialogTitle id="responsive-dialog-title">{"Ready to install your hApps?"}</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
-                      It's almost time to celebrate! 
+                      It's almost time to celebrate!
                       <br/>
                       As soon as you select 'Install hApps' below, our Holochain container will start preforming magic and complete the installation process of all the hApps you selected into your newly created Holochain environment.
                       <br/>
-                      So.. as soon as you're ready, select the Install button below. We can't wait to welcome you into our Holochain community!  
+                      So.. as soon as you're ready, select the Install button below. We can't wait to welcome you into our Holochain community!
                     </DialogContentText>
                     <br/>
                     <DialogContentText>
-                      All we need from you is to read over the following list of softare products, and affirm that you agree and are ready to begin their installation.
+                      All we need from you is to read over the following list of hApp choices, and affirm that you agree and are ready to begin their installation.
                         <br/>
                         <br/>
-                        - Node (>8v : JavaScript Engine)
+                        - HC Admin
                         <br/>
-                        - Rustup (>1.1 : Rust Toolchain Installer)
+                        - Deep key
                         <br/>
-                        - Cargo (>1.3 nightly build : Rust Package Manager)
+                        - HC Backup
                         <br/>
-                        - ZeroMQ (>4v : Distributed Messaging Library )
+                        - HC Filer
                         <br/>
-                        ... AND
-                        <br/>
-                        - Holochain Rust (latest version)
+                        - hApp Store
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
@@ -297,7 +299,7 @@ const coreHapps = [
                   </DialogActions>
                 </Dialog>
               </div>
-            </div>  
+            </div>
           </Grid>
           {/**/}
 

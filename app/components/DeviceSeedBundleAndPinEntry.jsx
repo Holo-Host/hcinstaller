@@ -160,27 +160,64 @@ class DevicePin extends React.Component<DevicePinProps, DevicePinState>{
           <span className={classes.inline}>
             <img src={logo} className={"App-Logo", classes.hcLogo} alt="logo" />
           </span>
-          <h2 className={classes.header1}>Device Pin Generation</h2>
-          <h3 className={classes.header2}>This Pin will be used alongside your Device Bundle to generate a Device Seed on each of your devices to ensure your identity within Holochain is unique and protected. </h3>
+          <h2 className={classes.header1}>Device Seed Bundle and PIN Entry</h2>
+          <h3 className={classes.header2}>Please enter in your Bundle and PIN to verify your idenity and extend your personal Holochain Envionrment onto this device. </h3>
 
-          <Grid item xs={6} className={classnames(classes.passRoot, classes.instructions)}  elevation={1}>
+          <Grid item xs={6} className={classes.passRoot}  elevation={1}>
             <div className={classes.sectionInstructions}>
-            <Grid container alignItems="center">
-              <Grid item xs>
-                <Typography gutterBottom variant="h4" className={classes.whiteText}>
-                  What is a Device PIN?
-                </Typography>
-              </Grid>
-              <Divider variant="middle" />
-              <Grid item>
-                <Typography gutterBottom variant="h6" className={classes.whiteText}>
-                  Device PIN EXPLAINATION goes here...
-                </Typography>
-              </Grid>
-            </Grid>
-          </div>
-          <Divider variant="middle" className={classes.whiteText} />
-          <img src="assets/icons/fingerprint-security.png" alt="fingerprint image" className={classes.iconImg}/>
+             <Grid container alignItems="center" id="passphrase-container">
+               <Grid item xs>
+                 <Typography gutterBottom variant="h4">
+                   Enter Your Passphrase
+                 </Typography>
+               </Grid>
+               <Grid item>
+                 <Typography gutterBottom variant="h6">
+
+                 </Typography>
+               </Grid>
+             </Grid>
+             <Typography color="textSecondary">
+
+             </Typography>
+            </div>
+
+           <Divider variant="middle" />
+
+           <div className={classes.sectionPassphrase}>
+              {this.state.message}
+             <form onSubmit={this.handleSubmitPassword}>
+               <Typography gutterBottom variant="body1">
+                 Enter Passpharase
+               </Typography>
+               <div>
+                 <TextField
+                    id="outlined-adornment-password"
+                    className={classnames(classes.margin, classes.textField)}
+                    variant="outlined"
+                    type={this.state.showPassword ? 'text' : 'password'}
+                    label="Password"
+                    aria-label="Passphrase"
+                    ref={this.PassphraseRef}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton aria-label="Toggle password visibility" className="viewDetails" onClick={this.handleClickShowPassword}>
+                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+               </div>
+
+               <div className={classes.sectionSubmit}>
+                 <Button type="submit" variant="contained" color="primary" fullWidth>
+                   Submit Passphrase
+                 </Button>
+               </div>
+             </form>
+           </div>
           </Grid>
 
           <Grid item xs={6} className={classes.passRoot}  elevation={1}>
@@ -188,17 +225,17 @@ class DevicePin extends React.Component<DevicePinProps, DevicePinState>{
              <Grid container alignItems="center" id="passphrase-container">
                <Grid item xs>
                  <Typography gutterBottom variant="h4">
-                   Set Your Device PIN
+                   Enter Your Device PIN
                  </Typography>
                </Grid>
                <Grid item>
                  <Typography gutterBottom variant="h6">
-                    INSTRUCTIONS FOR SETTING A DEVICE PIN
+
                  </Typography>
                </Grid>
              </Grid>
              <Typography color="textSecondary">
-                STEPS GO HERE...
+
              </Typography>
            </div>
 
@@ -247,11 +284,11 @@ class DevicePin extends React.Component<DevicePinProps, DevicePinState>{
                     }}
                   />
                </div>
-               // <div className={classes.sectionSubmit}>
-               //   <Button type="submit" variant="contained" color="primary" fullWidth>
-               //     Submit Passphrase
-               //   </Button>
-               // </div>
+               <div className={classes.sectionSubmit}>
+                 <Button type="submit" variant="contained" color="primary" fullWidth>
+                   Submit PIN
+                 </Button>
+               </div>
              </form>
            </div>
           </Grid>
@@ -261,7 +298,7 @@ class DevicePin extends React.Component<DevicePinProps, DevicePinState>{
             <Grid item xs={12} elevation={1}>
               <div className={classes.modal} className={classes.root}  >
                 <Fab variant="extended" aria-label="next" className={classes.nextBtn} onClick={this.handleInstallationNoticeOpen}>
-                    Discover Device Bundles
+                    Install Core Apps
                 </Fab>
                <Dialog
                   fullScreen={fullScreen}

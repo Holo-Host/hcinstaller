@@ -10,6 +10,7 @@ export const styles = theme => ({
    marginTop: -25,
    width: '100%',
    maxWidth: 360,
+   maxHeight:400,
    margin: 10,
    backgroundColor: theme.palette.background.paper,
    color: 'white',
@@ -79,8 +80,8 @@ export const styles = theme => ({
   },
   nextBtn: {
     position:'relative',
-    left:'51.25%',
-    bottom:0,
+    left:'33.3%',
+    top:10,
     width: 350,
     color: '#eee',
     fontSize: 20,
@@ -155,8 +156,8 @@ export const styles = theme => ({
   },
   instructions: {
     color: '#eee',
-    marginTop: 10,
-    maxHeight: 450,
+    // marginTop: 10,
+    // maxHeight: 450,
     background: '#4f83a4',
     border: '3px solid #00017fb3'
   },
@@ -165,7 +166,7 @@ export const styles = theme => ({
     textAlign: 'center'
   },
   pinPad: {
-    margin: 50,
+    margin: 5,
     maxHeight: 150,
     display: 'flex',
     flexFlow: 'row wrap',
@@ -173,6 +174,15 @@ export const styles = theme => ({
     justifyContent: 'space-around',
     aligncontent: 'flex-start',
     overflow: 'auto',
+  },
+  pinPadNumbers :{
+    flex: '1 1 auto',
+    margin: 2,
+  },
+  pinPadNumbersContainer : {
+    width: 20,
+    display: 'flex',
+    flexWrap: 'wrap',
   }
 });
 

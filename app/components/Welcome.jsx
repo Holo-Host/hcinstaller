@@ -262,6 +262,36 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
             </Typography>
 
             <div className={classes.control}>
+              <Link to={routes.WELCOMENEWUSER}>
+                <ButtonBase
+                focusRipple
+                className={classes.buttonBackground}
+                focusVisibleClassName={classes.focusVisible}
+                style={{
+                  width: '30%',
+                }}
+                >
+                  <span
+                    className={classes.buttonSrc}
+                    style={{
+                      backgroundImage: 'transparent',
+                    }}
+                  />
+                  <span className={classes.buttonBackdrop} />
+                  <span className={classes.imageButton}>
+                    <Typography
+                      component="span"
+                      variant="subtitle1"
+                      color="inherit"
+                      className={classes.buttonTitle}
+                    >
+                      Yes
+                      <span className={classes.buttonSelected} />
+                  </Typography>
+                 </span>
+                </ButtonBase>
+              </Link>
+
               <div className={classes.modal}>
                 <ButtonBase
                   focusRipple
@@ -342,36 +372,6 @@ class Welcome extends React.Component<WelcomeProps, WelcomeState>{
                   </DialogActions>
                 </Dialog>
               </div>
-
-              <Link to={routes.WELCOMENEWUSER}>
-                <ButtonBase
-                focusRipple
-                className={classes.buttonBackground}
-                focusVisibleClassName={classes.focusVisible}
-                style={{
-                  width: '30%',
-                }}
-                >
-                  <span
-                    className={classes.buttonSrc}
-                    style={{
-                      backgroundImage: 'transparent',
-                    }}
-                  />
-                  <span className={classes.buttonBackdrop} />
-                  <span className={classes.imageButton}>
-                    <Typography
-                      component="span"
-                      variant="subtitle1"
-                      color="inherit"
-                      className={classes.buttonTitle}
-                    >
-                      Yes
-                      <span className={classes.buttonSelected} />
-                  </Typography>
-                 </span>
-                </ButtonBase>
-              </Link>
             </div>
           </Grid>
 
